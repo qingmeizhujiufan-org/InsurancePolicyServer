@@ -4,7 +4,7 @@ const Moment = require('moment');
 
 module.exports = app => {
 
-    const { UUIDV1, INTEGER, STRING, DATE } = app.Sequelize;
+    const {UUIDV1, INTEGER, STRING, DATE} = app.Sequelize;
     const User = app.model.define('User', {
         //微信用户id
         id: {
@@ -12,11 +12,6 @@ module.exports = app => {
             defaultValue: UUIDV1,
             primaryKey: true,
             field: 'id'
-        },
-        //openid
-        openid: {
-            type: STRING(64),
-            field: 'openid'
         },
         //城市
         city: {
@@ -33,11 +28,7 @@ module.exports = app => {
             type: STRING(255),
             field: 'headimgurl'
         },
-        //语言
-        language: {
-            type: INTEGER,
-            field: 'language'
-        },
+
         //昵称
         nickname: {
             type: STRING(64),
@@ -52,6 +43,19 @@ module.exports = app => {
         sex: {
             type: INTEGER,
             field: 'sex'
+        },
+        //手机号
+        telephone: {
+            type: STRING(11),
+            field: 'telephone'
+        },
+        //生日
+        birthday: {
+            type: DATE,
+            field: 'birthday',
+            get() {
+                return Moment(this.getDataValue('birthday')).format('YYYY-MM-DD');
+            }
         },
         created_at: {
             type: DATE,
