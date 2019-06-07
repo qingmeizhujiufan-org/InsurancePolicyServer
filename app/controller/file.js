@@ -5,7 +5,7 @@ const path = require('path');
 const images = require('images');
 const Duplex = require('stream').Duplex;
 
-class AttachmentController extends BaseController {
+class FileController extends BaseController {
 
     streamToBuffer(stream) {
         return new Promise((resolve, reject) => {
@@ -27,7 +27,7 @@ class AttachmentController extends BaseController {
         const ctx = this.ctx;
         const stream = await ctx.getFileStream();
         const filename = stream.filename;
-        const result = await ctx.service.attachment.upload({
+        const result = await ctx.service.file.upload({
             fileName: filename,
             fileType: path.extname(filename),
             mimeType: stream.mimeType,
@@ -57,7 +57,7 @@ class AttachmentController extends BaseController {
         if (!params.ids) {
             this.fail({backMsg: "缺少参数ids！"});
         } else {
-            const result = await ctx.service.attachment.queryListByIds(params.ids);
+            const result = await ctx.service.file.queryListByIds(params.ids);
             if (result) {
                 this.success({
                     backData: result,
@@ -70,4 +70,4 @@ class AttachmentController extends BaseController {
     }
 }
 
-module.exports = AttachmentController;
+module.exports = FileController;
