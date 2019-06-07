@@ -5,43 +5,23 @@ const Moment = require('moment');
 module.exports = app => {
 
     const {UUIDV1, INTEGER, STRING, DATE} = app.Sequelize;
-    const User = app.model.define('User', {
-        //微信用户id
+    const Client = app.model.define('Client', {
+        //客户ID
         id: {
             type: STRING(255),
             defaultValue: UUIDV1,
             primaryKey: true,
             field: 'id'
         },
-        //城市
-        city: {
-            type: STRING(64),
-            field: 'city'
-        },
-        //国家
-        country: {
+        //关联业务员ID
+        userId: {
             type: STRING(255),
-            field: 'country'
+            field: 'user_id'
         },
-        //头像
-        headimgurl: {
-            type: STRING(255),
-            field: 'headimgurl'
-        },
-        //真实姓名
-        realname: {
+        //客户姓名
+        clientName: {
           type: STRING(64),
-          field: 'realname'
-        },
-        //昵称
-        nickname: {
-            type: STRING(64),
-            field: 'nickname'
-        },
-        //省份
-        province: {
-            type: STRING(64),
-            field: 'province'
+          field: 'client_name'
         },
         //性别
         sex: {
@@ -75,8 +55,8 @@ module.exports = app => {
         }
     }, {
         freezeTableName: true,
-        tableName: 'user_info',
+        tableName: 'client_info',
         timestamps: true,
     });
-    return User;
+    return Client;
 };
