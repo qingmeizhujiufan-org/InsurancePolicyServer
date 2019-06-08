@@ -8,12 +8,12 @@ class AdminService extends Service {
     async login(params) {
         const ctx = this.ctx;
         const User = ctx.model.Admin;
-        const Attachment = ctx.model.Attachment;
-        User.belongsTo(Attachment, {foreignKey: 'avatarSrc'});
+        const File = ctx.model.File;
+        User.belongsTo(File, {foreignKey: 'avatarSrc'});
         const res = await ctx.model.Admin.findOne({
             where: params,
             include: [{
-                model: Attachment,
+                model: File,
                 attributes: ['id', 'fileType']
             }],
         });

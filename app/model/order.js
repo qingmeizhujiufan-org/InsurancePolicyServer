@@ -4,7 +4,7 @@ const Moment = require('moment');
 
 module.exports = app => {
 
-    const {UUIDV1, INTEGER, STRING, DATE, DATETIME, DECIMAL} = app.Sequelize;
+    const {UUIDV1, INTEGER, STRING, DATE, DECIMAL} = app.Sequelize;
     const Order = app.model.define('Order', {
         //id
         id: {
@@ -40,7 +40,7 @@ module.exports = app => {
         },
         //投保时间
         insuredTime: {
-            type: DATETIME,
+            type: DATE,
             field: 'insured_time'
         },
         //缴费年限
