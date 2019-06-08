@@ -3,7 +3,7 @@
 const Service = require('egg').Service;
 const UUID = require('uuid');
 
-class AttachmentService extends Service {
+class FileService extends Service {
 
     async upload(fieldsValue) {
         const ctx = this.ctx;
@@ -11,7 +11,7 @@ class AttachmentService extends Service {
             id: UUID.v1(),
             ...fieldsValue
         };
-        const res = await ctx.model.Attachment.create(params);
+        const res = await ctx.model.File.create(params);
 
         return {
             rowsAffected: res,
@@ -24,7 +24,7 @@ class AttachmentService extends Service {
         let res = [];
         debugger;
         if (ids && typeof ids === 'string') {
-            res = await ctx.model.Attachment.findAll({
+            res = await ctx.model.File.findAll({
                 where: {id: ids.split(',')},
                 attributes: ['id', 'fileName', 'fileType', 'mimeType', 'created_at'],
                 order: [['created_at', 'asc']],
@@ -35,4 +35,4 @@ class AttachmentService extends Service {
     }
 }
 
-module.exports = AttachmentService;
+module.exports = FileService;

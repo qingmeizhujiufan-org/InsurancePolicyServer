@@ -127,7 +127,7 @@ module.exports = app => {
         }
     }, {
         freezeTableName: true,
-        tableName: 'user_info',
+        tableName: 'order_info',
         timestamps: true,
     });
     return Order;

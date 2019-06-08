@@ -62,7 +62,7 @@ class AdminController extends BaseController {
         const result = await ctx.service.admin.qureyOneUser(params);
 
         if (result) {
-            const picList = await ctx.service.attachment.queryListByIds(result.avatarSrc);
+            const picList = await ctx.service.file.queryListByIds(result.avatarSrc);
             result.avatarSrc = picList;
             this.success({
                 backMsg: "用户详情查询成功！",
