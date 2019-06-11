@@ -2,7 +2,7 @@
 
 const jwt = require('jsonwebtoken');
 const BaseController = require('../core/BaseController');
-const {parseInt} = require('../extend/helper');
+const { parseInt } = require('../extend/helper');
 
 function generateToken(data, time) {
     let created = Math.floor(Date.now());
@@ -22,7 +22,7 @@ class UserController extends BaseController {
         const user = await ctx.service.user.login(params);
         if (user) {
             //生成cookie
-            let token = generateToken({_id: user.id}, 3 * 60 * 60 * 1000);
+            let token = generateToken({ _id: user.id }, 3 * 60 * 60 * 1000);
             //保存到客户端浏览器的cookie中
             ctx.cookies.set('token', token, {
                 maxAge: 3 * 60 * 60 * 1000,
@@ -81,7 +81,7 @@ class UserController extends BaseController {
         const params = ctx.request.body;
         // console.log('params ===', params);
 
-        const uniqueUser = await ctx.service.user.findByName({userName: params.userName})
+        const uniqueUser = await ctx.service.user.findByName({ userName: params.userName })
 
         if (uniqueUser === null) {
             const result = await ctx.service.user.add(params);

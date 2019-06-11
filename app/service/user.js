@@ -58,11 +58,8 @@ class UserService extends Service {
     }
 
     async add(params) {
-        const data = {
-            ...params,
-            isFrozen: 0
-        };
-        const res = await this.ctx.model.User.create(data);
+       
+        const res = await this.ctx.model.User.create(params);
         return res;
     }
 
@@ -94,6 +91,21 @@ class UserService extends Service {
         return user;
     }
 
+     async findByPhone(params) {
+        const user = await this.ctx.model.User.findOne({
+            where: params
+        });
+        return user;
+    }
+
+    async checkOldPassword(params) {
+        const user = await this.ctx.model.User.findOne({
+            where: params
+        });
+        return user;
+
+    }
+
     async resetPassword(params) {
         const newData = {
             ...params,
@@ -104,6 +116,19 @@ class UserService extends Service {
         });
         return res;
     }
+
+     async changePassword(params) {
+        const newData = {
+            id: params.id,
+            password:  params,nesPassword,
+        }
+        const res = await this.ctx.model.User.update(newData, {
+            where: {id: params.id}
+        });
+        return res;
+    }
+
+
 
     async frozen(params) {
         const newData = {

@@ -38,4 +38,7 @@ module.exports = app => {
      */
     /* 微信登录 */
     router.get('/api/app/login', controller.app.login);
+    /* 微信注册 */
+    router.get('/api/app/register', controller.app.register);
+    
 };
