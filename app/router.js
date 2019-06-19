@@ -33,6 +33,11 @@ module.exports = app => {
     /* 根据id查找附件 */
     router.get('/api/file/queryListByIds', controller.file.queryListByIds);
 
+    /*添加客户*/
+    router.post('/api/custom/add', controller.custom.add);
+      /*添加客户*/
+    router.get('/api/custom/queryList', controller.custom.queryList);
+
     /*
      * APP接口
      */

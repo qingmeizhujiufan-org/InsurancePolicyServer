@@ -26,7 +26,7 @@ class AppController extends BaseController {
       });
     } else {
       this.fail({
-        backMsg: "用户编码或密码不正确！"
+        backMsg: "用户名或密码不正确！"
       });
     }
   }
@@ -66,9 +66,9 @@ class AppController extends BaseController {
     const params = ctx.request.body;
 
     // 验证码校验
-    const check = await ctx.service.checkCode(params);
+    const check = await ctx.service.user.checkCode(params);
     if (check) {
-      const result = ctx.service.resetPassword(params);
+      const result = ctx.service.user.resetPassword(params);
       if (result) {
         this.success({
           backMsg: '密码重置成功！',
@@ -98,7 +98,7 @@ class AppController extends BaseController {
     } = params;
     const user = await ctx.service.user.checkOldPassword({ id, password});
     if (user) {
-      const result = ctx.service.changePassword({ id, newPassword});
+      const result = ctx.service.user.changePassword({ id, newPassword});
       if (result) {
         this.success({
           backMsg: '密码修改成功！',
