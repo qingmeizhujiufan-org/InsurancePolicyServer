@@ -54,16 +54,20 @@ class CustomService extends Service {
     return res;
   }
 
-  async updateCustom(params) {
+  async update(params) {
     const res = await this.ctx.model.Custom.update(params, {
       where: { id: params.id }
     });
     return res;
   }
 
-  async qureyOneCustom(params) {
-    const res = await this.ctx.model.Admin.findOne({
-      where: { id: params.id }
+  async queryOne(params) {
+    const { id, userId } = params;
+    const res = await this.ctx.model.Custom.findOne({
+      where: {
+        id,
+        userId
+      }
     });
     return res;
   }

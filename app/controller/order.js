@@ -14,17 +14,17 @@ function generateToken(data, time) {
   return token;
 }
 
-class customController extends BaseController {
+class orderController extends BaseController {
 
   async queryList() {
     const ctx = this.ctx;
     const params = ctx.query;
     params.pageNumber = parseInt(params.pageNumber);
     params.pageSize = parseInt(params.pageSize);
-    const customList = await ctx.service.custom.queryList(params);
+    const orderList = await ctx.service.order.queryList(params);
     this.success({
       backMsg: "获取客户列表成功！",
-      backData: customList
+      backData: orderList
     });
   }
 
@@ -33,11 +33,9 @@ class customController extends BaseController {
     const params = ctx.query;
     console.log('params ===', params);
 
-    const result = await ctx.service.custom.queryOne(params);
+    const result = await ctx.service.order.queryOne(params);
 
     if (result) {
-      // const picList = await ctx.service.file.queryListByIds(result.avatarSrc);
-      // result.avatarSrc = picList;
       this.success({
         backMsg: "客户详情查询成功！",
         backData: result
@@ -54,14 +52,13 @@ class customController extends BaseController {
     const params = ctx.request.body;
     // console.log('params ===', params);
     const param = { 
-        customName: params.customName, 
-        customTel: params.customTel
+        insurancePolicyNo: params.insurancePolicyNo
     };
 
-    const uniquecustom = await ctx.service.custom.findByNameAndTel(param);
+    const uniqueorder = await ctx.service.order.findByInsurancePolicyNo(param);
 
-    if (uniquecustom === null) {
-      const result = await ctx.service.custom.add(params);
+    if (uniqueorder === null) {
+      const result = await ctx.service.order.add(params);
 
       if (result.dataValues) {
         this.success({
@@ -83,7 +80,7 @@ class customController extends BaseController {
   async update() {
     const ctx = this.ctx;
     const params = ctx.request.body;
-    const result = await ctx.service.custom.update(params);
+    const result = await ctx.service.order.update(params);
    
     if (result) {
       this.success({
@@ -101,7 +98,7 @@ class customController extends BaseController {
     const params = ctx.request.body;
     console.log('params ===', params);
 
-    const result = await ctx.service.custom.delete(params);
+    const result = await ctx.service.order.delete(params);
     console.log('result ===', result)
     if (result) {
       this.success({
@@ -118,7 +115,7 @@ class customController extends BaseController {
     const ctx = this.ctx;
     const params = ctx.request.body;
     const isFrozen = params.isFrozen;
-    const result = await ctx.service.custom.frozen(params);
+    const result = await ctx.service.order.frozen(params);
     if (result) {
       this.success({
         backMsg: isFrozen ? "客户冻结成功！" : "客户解冻成功！",
@@ -130,7 +127,6 @@ class customController extends BaseController {
       });
     }
   }
-
 }
 
-module.exports = customController;
+module.exports = orderController;

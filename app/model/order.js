@@ -41,7 +41,10 @@ module.exports = app => {
         //投保时间
         insuredTime: {
             type: DATE,
-            field: 'insured_time'
+            field: 'insured_time',
+             get() {
+                return Moment(this.getDataValue('insured_time')).format('YYYY-MM-DD');
+            }
         },
         //缴费年限
         paymentDuration: {

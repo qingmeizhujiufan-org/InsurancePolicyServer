@@ -37,9 +37,9 @@ module.exports = app => {
         customBirth: {
             type: DATE,
             field: 'custom_birth',
-            get() {
-                return Moment(this.getDataValue('custom_birth')).format('YYYY-MM-DD');
-            }
+            // get() {
+            //     return Moment(this.getDataValue('custom_birth')).format('YYYY-MM-DD');
+            // }
         },
         created_at: {
             type: DATE,
