@@ -189,6 +189,34 @@ class UserController extends BaseController {
     }
   }
 
+  async changePassword() {
+    const ctx = this.ctx;
+    const params = ctx.request.body;
+    const param = {
+      id: params.id,
+      password: params.password
+    }
+    const user = await ctx.service.user.queryOneUser(param);
+
+    if (user) {
+      const result = await ctx.service.user.changePassword(params);
+      if (result) {
+        this.success({
+          backMsg: "密码修改成功"
+        });
+      } else {
+        this.fail({
+          backMsg: "重置修改失败！"
+        });
+      }
+
+    } else {
+      this.fail({
+        backMsg: "旧密码不正确！"
+      });
+    }
+  }
+
   async resetPassword() {
     const ctx = this.ctx;
     const params = ctx.request.body;
@@ -196,7 +224,7 @@ class UserController extends BaseController {
     const result = await ctx.service.user.resetPassword(params)
     if (result) {
       this.success({
-        backMsg: "重置密码成功，新密码为000000",
+        backMsg: "重置密码成功",
         backData: result
       });
     } else {

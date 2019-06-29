@@ -72,7 +72,9 @@ class UserService extends Service {
 
     async queryOneUser(params) {
         const res = await this.ctx.model.User.findOne({
-            where: {id: params.id}
+            where: {
+                ...params
+            }
         });
         return res;
     }
