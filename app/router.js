@@ -39,18 +39,24 @@ module.exports = app => {
   router.get('/api/custom/queryList', controller.custom.queryList);
   /*客户详情*/
   router.get('/api/custom/queryOne', controller.custom.queryOne);
- /*客户更新*/
+  /*客户更新*/
   router.post('/api/custom/update', controller.custom.update);
 
-   /*添加订单*/
+  /*添加订单*/
   router.post('/api/order/add', controller.order.add);
   /*订单列表*/
   router.get('/api/order/queryList', controller.order.queryList);
   /*订单详情*/
   router.get('/api/order/queryOne', controller.order.queryOne);
- /*订单更新*/
+  /*订单更新*/
   router.post('/api/order/update', controller.order.update);
 
+  /*业务员业务统计详情*/
+  router.get('/api/user/qureyUserSum', controller.user.queryUserSum);
+  /*业务员信息详情查询*/
+  router.get('/api/user/queryOneUser', controller.user.queryOneUser);
+  /*业务员信息详情保存*/
+  router.post('/api/user/update', controller.user.update);
 
   /*
    * APP接口

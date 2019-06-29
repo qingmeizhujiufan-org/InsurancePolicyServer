@@ -63,19 +63,20 @@ class UserService extends Service {
         return res;
     }
 
-    async updateUser(params) {
+    async update(params) {
         const res = await this.ctx.model.User.update(params, {
             where: {id: params.id}
         });
         return res;
     }
 
-    async qureyOneUser(params) {
-        const res = await this.ctx.model.Admin.findOne({
+    async queryOneUser(params) {
+        const res = await this.ctx.model.User.findOne({
             where: {id: params.id}
         });
         return res;
     }
+
 
     async delete(params) {
         const res = await this.ctx.model.User.destroy({
@@ -127,8 +128,6 @@ class UserService extends Service {
         });
         return res;
     }
-
-
 
     async frozen(params) {
         const newData = {

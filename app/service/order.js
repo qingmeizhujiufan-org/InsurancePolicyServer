@@ -2,6 +2,9 @@
 
 const Service = require('egg').Service;
 const UUID = require('uuid');
+const Moment = require('moment');
+
+const { getCurrentQuarter } = require('../extend/util');
 
 class orderService extends Service {
 
@@ -68,8 +71,77 @@ class orderService extends Service {
     };
   }
 
-  async add(params) {
+  async queryOrderMonthSum(params) {
+    const Sequelize = this.app.Sequelize;
+    const Op = Sequelize.Op;
+    const month = Moment().month();
+    const year = Moment().year();
+    const days = Moment().daysInMonth();
+    const beginDate = new Date(year, month, 1, 0, 0, 0);
+    const endDate = new Date(year, month, days, 23, 59, 59);
 
+    const res = await this.ctx.model.Order.findAll({
+      attributes: ['insurance'],
+      where: {
+        '$and': {
+          insuredTime: {
+            [Op.between]: [beginDate, endDate]
+          },
+          userId: params.id,
+        }
+      }
+    });
+    return res;
+  }
+
+
+  async queryOrderQuarterSum(params) {
+    const Sequelize = this.app.Sequelize;
+    const Op = Sequelize.Op;
+    const year = Moment().year();
+    const quarter = getCurrentQuarter();
+    console.log(quarter)
+    const days = Moment(quarter[1] + 1, 'M').daysInMonth();
+    console.log(days)
+
+    const beginDate = new Date(year, quarter[0], 1, 0, 0, 0);
+    const endDate = new Date(year, quarter[1], days, 23, 59, 59);
+
+    const res = await this.ctx.model.Order.findAll({
+      attributes: ['insurance'],
+      where: {
+        '$and': {
+          insuredTime: {
+            [Op.between]: [beginDate, endDate]
+          },
+          userId: params.id,
+        }
+      }
+    });
+    return res;
+  }
+
+  async queryOrderYearSum(params) {
+    const Sequelize = this.app.Sequelize;
+    const Op = Sequelize.Op;
+    const year = Moment().year();
+    const beginDate = new Date(year, 0, 1, 0, 0, 0);
+    const endDate = new Date(year, 11, 31, 23, 59, 59);
+    const res = await this.ctx.model.Order.findAll({
+      attributes: ['insurance'],
+      where: {
+        '$and': {
+          insuredTime: {
+            [Op.between]: [beginDate, endDate]
+          },
+          userId: params.id,
+        }
+      }
+    });
+    return res;
+  }
+
+  async add(params) {
     const res = await this.ctx.model.Order.create(params);
     return res;
   }
