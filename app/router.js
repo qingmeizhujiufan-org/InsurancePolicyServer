@@ -25,9 +25,6 @@ module.exports = app => {
   /* 后台重置密码 */
   router.post('/api/admin/resetPassword', UserInterceptor, controller.admin.resetPassword);
 
-  /* 查询业务员列表 */
-  router.get('/api/user/queryList', controller.user.queryList);
-
   /* 附件上传 */
   router.post('/api/file/upload', controller.file.upload);
   /* 根据id查找附件 */
@@ -51,22 +48,25 @@ module.exports = app => {
   /*订单更新*/
   router.post('/api/order/update', controller.order.update);
 
-  /*业务员业务统计详情*/
-  router.get('/api/user/queryUserSum', controller.user.queryUserSum);
-  /*业务员信息详情查询*/
-  router.get('/api/user/queryOneUser', controller.user.queryOneUser);
-  /*业务员信息详情保存*/
-  router.post('/api/user/update', controller.user.update);
-  /*业务员修改密码*/
-  router.post('/api/user/changePassword', controller.user.changePassword);
+    /* 查询业务员列表 */
+    router.get('/api/user/queryList', controller.user.queryList);
+
+    /*业务员业务统计详情*/
+    router.get('/api/user/queryUserSum', controller.user.queryUserSum);
+    /*业务员信息详情查询*/
+    router.get('/api/user/queryOneUser', controller.user.queryOneUser);
+    /*业务员信息详情保存*/
+    router.post('/api/user/update', controller.user.update);
+    /*业务员修改密码*/
+    router.post('/api/user/changePassword', controller.user.changePassword);
     /*业务员重置密码*/
-  router.post('/api/user/retrievePassword', controller.user.retrievePassword);
-  /*
-   * APP接口
-   */
-  /* 微信登录 */
-  router.get('/api/app/login', controller.app.login);
-  /* 微信注册 */
-  router.get('/api/app/register', controller.app.register);
+    // router.post('/api/user/retrievePassword', controller.user.retrievePassword);
+    /*
+     * APP接口
+     */
+    /* 微信登录 */
+    router.get('/api/app/login', controller.app.login);
+    /* 微信注册 */
+    router.get('/api/app/register', controller.app.register);
 
 };
