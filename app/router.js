@@ -17,7 +17,7 @@ module.exports = app => {
     /* 后台新增管理人员 */
     router.post('/api/admin/add', UserInterceptor, controller.admin.add);
     /* 后台修改管理人员 */
-    router.post('/api/admin/updateUser', UserInterceptor, controller.admin.updateUser);
+    router.post('/api/admin/update', controller.admin.update);
     /* 后台删除用户 */
     router.post('/api/admin/delete', UserInterceptor, controller.admin.delete);
     /* 后台用户冻结 */

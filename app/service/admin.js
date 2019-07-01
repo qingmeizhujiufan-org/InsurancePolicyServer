@@ -66,7 +66,7 @@ class AdminService extends Service {
         return res;
     }
 
-    async updateUser(params) {
+    async update(params) {
         const res = await this.ctx.model.Admin.update(params, {
             where: {id: params.id}
         });
