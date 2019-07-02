@@ -72,10 +72,19 @@ class UserService extends Service {
   }
 
   async queryOneUser(params) {
-    const res = await this.ctx.model.User.findOne({
+    const ctx = this.ctx;
+    const User = ctx.model.User;
+    const InsuranceCompany = ctx.model.InsuranceCompany;
+    User.belongsTo(InsuranceCompany, { foreignKey: 'company', targetKey: 'id' })
+
+    const res = await User.findOne({
       where: {
         ...params
-      }
+      },
+      include: [{
+        model: InsuranceCompany,
+        attributes: ['id', 'companyName']
+      }]
     });
     return res;
   }
@@ -217,85 +226,71 @@ class UserService extends Service {
     const User = ctx.model.User;
     const Order = ctx.model.Order;
     const Like = ctx.model.Like;
-    // User.hasMany(Order, { foreignKey: 'userId', sourceKey: 'id' });
-    // User.hasMany(Like, { foreignKey: 'likeTo', sourceKey: 'id' });
-    // Order.belongsTo(User, { foreignKey: 'userId'});
-    // Like.belongsTo(User, { foreignKey: 'likeTo'});
-    // 
+    const InsuranceCompany = ctx.model.InsuranceCompany;
 
+    User.belongsTo(InsuranceCompany, { foreignKey: 'company', targetKey: 'id' })
+    User.hasMany(Order, { foreignKey: 'userId', sourceKey: 'id' });
+    User.hasMany(Like, { foreignKey: 'likeTo', sourceKey: 'id' });
 
     const { id = '', time = 0, condition = 0 } = params;
-    let range = {};
+    let orderSum = {},
+      likeSum = {};
 
     if (time === 0) {
-      range = getMonthRange();
+      orderSum = await ctx.service.order.queryOrderMonthSum({ id });
+       likeSum = await ctx.service.like.queryLikeMonthSum({ id });
     }
 
     if (time === 1) {
-      range = getQuarterRange();
+      orderSum = await ctx.service.order.queryOrderQuarterSum({ id });
+       likeSum = await ctx.service.like.queryLikeMonthSum({ id });
     }
 
     if (time === 2) {
-      range = getYearRange();
+      orderSum = await ctx.service.order.queryOrderYearSum({ id });
+       likeSum = await ctx.service.like.queryLikeMonthSum({ id });
     }
 
-    const order = Order.findAll({
-      where: {
-        userId: id,
-        insuredTime: {
-          [Op.between]: [range.beginDate, range.endDate]
-        },
-      },
-      attributes: [
-        [Sequelize.fn('COUNT', Sequelize.col('*')), 'orderNum'],
-        [Sequelize.fn('SUM', Sequelize.col('insurance')), 'orderSum']
-      ],
-    });
 
-    const like = Like.findAll({
-      where: {
-        likeTo: id,
-        created_at: {
-          [Op.between]: [range.beginDate, range.endDate]
-        },
-      },
-      attributes: [
-        [Sequelize.fn('COUNT', Sequelize.col('userId')), 'orderNum'],
-        [Sequelize.fn('SUM', Sequelize.col('insurance')), 'orderSum']
-      ],
-    });
-
-    const res = User.findOne({
+    const user = await User.findOne({
       where: {
         id
       },
       attributes: ['id', 'realname', 'company'],
-      // include: [{
-      //   model: Order,
-      //   attributes: [
-          // [Sequelize.fn('COUNT', Sequelize.col('userId')), 'orderNum'],
-          // [Sequelize.fn('SUM', Sequelize.col('insurance')), 'orderSum']
-      //   ],
-      //   where: {
-      //     insuredTime: {
-      //       [Op.between]: [range.beginDate, range.endDate]
-      //     },
-      //   }
-      // }, {
-      //   model: Like,
-      //   attributes: [
-          // [Sequelize.fn('COUNT', Sequelize.col('likeTo')), 'likeNum']
-        // ],
-        // where: {
-        //   created_at: {
-        //     [Op.between]: [range.beginDate, range.endDate]
-        //   },
+      include: [{
+          model: InsuranceCompany,
+          attributes: ['id', 'companyName']
+        },
+        // {
+        //   model: Order,
+        //   attributes: [
+        //     [Sequelize.fn('COUNT', Sequelize.col('user_id')), 'orderNum'],
+        //     [Sequelize.fn('SUM', Sequelize.col('insurance')), 'orderSum']
+        //   ],
+        //   where: {
+        //     insuredTime: {
+        //       [Op.between]: [range.beginDate, range.endDate]
+        //     },
+        //   }
+        // },
+        // {
+        //   model: Like,
+        //   attributes: [
+        //     [Sequelize.fn('COUNT', Sequelize.col('like_to')), 'likeNum']
+        //   ],
+        //   where: {
+        //     created_at: {
+        //       [Op.between]: [range.beginDate, range.endDate]
+        //     },
+        //   }
         // }
-      // }]
+      ]
     })
 
     return {
-        res, order, like
+        user,
+        orderSum,
+        likeSum
     };
   }
 }

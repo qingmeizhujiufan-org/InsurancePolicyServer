@@ -8,15 +8,17 @@ const range = {
   4: [9, 11],
 }
 
+function getCurrentQuarter() {
+  const cur = Moment().quarter()
+  return range[cur]
+}
+
 module.exports = {
   getCurrentMonth() {
     const cur = Moment().month();
     return cur;
   },
-  getCurrentQuarter() {
-    const cur = Moment().quarter()
-    return range[cur]
-  },
+  getCurrentQuarter,
   getCurrentYear() {
     const cur = Moment().year();
     return cur;

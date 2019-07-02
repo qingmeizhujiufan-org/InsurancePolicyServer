@@ -73,8 +73,11 @@ class orderService extends Service {
     const Op = Sequelize.Op;
     const range = getMonthRange();
 
-    const res = await this.ctx.model.Order.findAll({
-      attributes: ['insurance'],
+    const res = await this.ctx.model.Order.find({
+      attributes: [
+        [Sequelize.fn('COUNT', Sequelize.col('*')), 'orderNum'],
+        [Sequelize.fn('SUM', Sequelize.col('insurance')), 'orderSum']
+      ],
       where: {
         '$and': {
           insuredTime: {
@@ -93,8 +96,11 @@ class orderService extends Service {
     const Op = Sequelize.Op;
     const range = getQuarterRange();
 
-    const res = await this.ctx.model.Order.findAll({
-      attributes: ['insurance'],
+    const res = await this.ctx.model.Order.find({
+      attributes: [
+        [Sequelize.fn('COUNT', Sequelize.col('*')), 'orderNum'],
+        [Sequelize.fn('SUM', Sequelize.col('insurance')), 'orderSum']
+      ],
       where: {
         '$and': {
           insuredTime: {
@@ -111,8 +117,11 @@ class orderService extends Service {
     const Sequelize = this.app.Sequelize;
     const Op = Sequelize.Op;
     const range = getYearRange();
-    const res = await this.ctx.model.Order.findAll({
-      attributes: ['insurance'],
+    const res = await this.ctx.model.Order.find({
+      attributes: [
+        [Sequelize.fn('COUNT', Sequelize.col('*')), 'orderNum'],
+        [Sequelize.fn('SUM', Sequelize.col('insurance')), 'orderSum']
+      ],
       where: {
         '$and': {
           insuredTime: {

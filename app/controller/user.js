@@ -87,13 +87,9 @@ class UserController extends BaseController {
     let quarter = await ctx.service.order.queryOrderQuarterSum(params);
     let year = await ctx.service.order.queryOrderYearSum(params);
 
-    month = getSum(month);
-    quarter = getSum(quarter);
-    year = getSum(year);
     if (user) {
       const picList = await ctx.service.file.queryListByIds(user.headimgurl);
       user.headimgurl = picList;
-
       const result = {
         user,
         month,

@@ -74,6 +74,16 @@ class InsuranceCompanyService extends Service {
         });
         return res;
     }
+
+     async findById(params) {
+        const res = await this.ctx.model.InsuranceCompany.findOne({
+            attributes: ['companyName'],
+            where: {
+                id: params
+            }
+        });
+        return res;
+    }
 }
 
 module.exports = InsuranceCompanyService;
