@@ -31,8 +31,42 @@ module.exports = {
       }
     }, 0);
     return {
-        sum: sum.toFixed(2),
-        count: arr.length
+      sum: sum.toFixed(2),
+      count: arr.length
+    }
+  },
+
+  getMonthRange() {
+    const month = Moment().month();
+    const year = Moment().year();
+    const days = Moment().daysInMonth();
+    const beginDate = new Date(year, month, 1, 0, 0, 0);
+    const endDate = new Date(year, month, days, 23, 59, 59);
+    return {
+      beginDate,
+      endDate
+    }
+  },
+
+  getQuarterRange() {
+    const year = Moment().year();
+    const quarter = getCurrentQuarter();
+    const days = Moment(quarter[1] + 1, 'M').daysInMonth();
+    const beginDate = new Date(year, quarter[0], 1, 0, 0, 0);
+    const endDate = new Date(year, quarter[1], days, 23, 59, 59);
+    return {
+      beginDate,
+      endDate
+    }
+  },
+
+  getYearRange() {
+    const year = Moment().year();
+    const beginDate = new Date(year, 0, 1, 0, 0, 0);
+    const endDate = new Date(year, 11, 31, 23, 59, 59);
+    return {
+      beginDate,
+      endDate
     }
   }
 };

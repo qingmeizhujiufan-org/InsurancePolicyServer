@@ -38,6 +38,11 @@ module.exports = app => {
       type: STRING(64),
       field: 'nickname'
     },
+    //密码
+    password: {
+      type: STRING(255),
+      field: 'password' 
+    },
     //公司
     company: {
       type: STRING(255),

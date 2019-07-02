@@ -39,7 +39,7 @@ class UserController extends BaseController {
       });
     } else {
       this.fail({
-        backMsg: "用户编码或密码不正确！"
+        backMsg: "手机号或密码不正确！"
       });
     }
   }
@@ -114,26 +114,39 @@ class UserController extends BaseController {
   async add() {
     const ctx = this.ctx;
     const params = ctx.request.body;
-    // console.log('params ===', params);
+    const { telephone, code, password } = params;
 
-    const uniqueUser = await ctx.service.user.findByName({ userName: params.userName })
-
+    const uniqueUser = await ctx.service.user.findByPhone({ telephone })
+    // 是否注册
     if (uniqueUser === null) {
-      const result = await ctx.service.user.add(params);
+      // 验证码校验
+      const check = await ctx.service.user.checkCode({
+        telephone,
+        code
+      });
 
-      if (result.dataValues) {
-        this.success({
-          backMsg: "新增用户成功！",
-          backData: result
-        });
+      if (check) {
+        const result = await ctx.service.user.add(params);
+
+        if (result.dataValues) {
+          this.success({
+            backMsg: "新增用户成功！",
+            backData: result
+          });
+        } else {
+          this.fail({
+            backMsg: "新增用户失败！"
+          });
+        }
       } else {
         this.fail({
-          backMsg: "新增用户失败！"
+          backMsg: "验证码不正确"
         });
       }
+
     } else {
       this.fail({
-        backMsg: "用户名已存在!"
+        backMsg: "手机号已注册!"
       });
     }
   }
@@ -194,12 +207,16 @@ class UserController extends BaseController {
     const params = ctx.request.body;
     const param = {
       id: params.id,
-      password: params.password
+      password: params.oldPassword
     }
     const user = await ctx.service.user.queryOneUser(param);
 
     if (user) {
-      const result = await ctx.service.user.changePassword(params);
+      const newParam = {
+        id: params.id,
+        password: params.password
+      };
+      const result = await ctx.service.user.changePassword(newParam);
       if (result) {
         this.success({
           backMsg: "密码修改成功"
@@ -217,21 +234,98 @@ class UserController extends BaseController {
     }
   }
 
-  async resetPassword() {
+  async retrievePassword() {
     const ctx = this.ctx;
     const params = ctx.request.body;
 
-    const result = await ctx.service.user.resetPassword(params)
+    const result = await ctx.service.user.retrievePassword(params)
     if (result) {
       this.success({
-        backMsg: "重置密码成功",
+        backMsg: "密码找回成功"
+      });
+    } else {
+      this.fail({
+        backMsg: "密码找回失败！"
+      });
+    }
+  }
+
+  async getCode() {
+    const ctx = this.ctx;
+    const params = ctx.query;
+    console.log('params ===', params);
+
+    const result = await ctx.service.user.getCode(params)
+    if (result) {
+      this.success({
+        backMsg: "验证码获取成功",
         backData: result
       });
     } else {
       this.fail({
-        backMsg: "重置密码失败！"
+        backMsg: "验证码获取失败！"
       });
     }
+  }
+
+  async checkCode() {
+    const ctx = this.ctx;
+    const params = ctx.request.body;
+    const { telephone, code, password } = params;
+
+    const uniqueUser = await ctx.service.user.findByPhone({ telephone })
+    // 是否注册
+    if (uniqueUser) {
+      // 验证码校验
+      const check = await ctx.service.user.checkCode({
+        telephone,
+        code
+      });
+
+      if (check) {
+        this.success({
+          backMsg: "验证通过！",
+          backData: check
+        });
+      } else {
+        this.fail({
+          backMsg: "验证失败!"
+        });
+      }
+
+    } else {
+      this.fail({
+        backMsg: "手机号未注册!"
+      });
+    }
+  }
+
+  async querySumList() {
+    const ctx = this.ctx;
+    const params = ctx.query;
+    params.pageNumber = parseInt(params.pageNumber);
+    params.pageSize = parseInt(params.pageSize);
+    params.time = parseInt(params.time);
+    params.condition = parseInt(params.condition);
+
+    const sumList = await ctx.service.user.querySumList(params);
+    this.success({
+      backMsg: "获取统计列表成功！",
+      backData: sumList
+    });
+  }
+
+  async querySumOne() {
+    const ctx = this.ctx;
+    const params = ctx.query;
+    params.time = parseInt(params.time);
+    params.condition = parseInt(params.condition);
+
+    const sumOne = await ctx.service.user.querySumOne(params);
+    this.success({
+      backMsg: "获取统计信息成功！",
+      backData: sumOne
+    });
   }
 }
 
