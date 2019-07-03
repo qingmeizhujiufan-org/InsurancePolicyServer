@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2019-06-29 23:19:14
+Date: 2019-07-03 21:58:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -79,8 +79,8 @@ CREATE TABLE `custom_info` (
 -- ----------------------------
 -- Records of custom_info
 -- ----------------------------
-INSERT INTO `custom_info` VALUES ('ca7bb950-9291-11e9-80e2-5385c6f67f03', '打的', '1', '2012-02-22', '1232', '2019-06-19 20:57:27.000000', '2019-06-22 00:02:12.000000', '1');
-INSERT INTO `custom_info` VALUES ('4f642ae0-942b-11e9-8ecd-7f58a0beba9f', '大东方神大哥', '1', '2019-06-21', '3333', '2019-06-21 21:48:54.000000', '2019-06-21 22:30:32.000000', '1');
+INSERT INTO `custom_info` VALUES ('ca7bb950-9291-11e9-80e2-5385c6f67f03', '打的', '1', '2012-02-22', '1232', '2019-06-19 20:57:27.000000', '2019-06-22 00:02:12.000000', '30b13970-0052-11e9-8735-190581b1698d');
+INSERT INTO `custom_info` VALUES ('4f642ae0-942b-11e9-8ecd-7f58a0beba9f', '大东方神大哥', '1', '2019-06-21', '3333', '2019-06-21 21:48:54.000000', '2019-06-21 22:30:32.000000', '30b13970-0052-11e9-8735-190581b1698d');
 
 -- ----------------------------
 -- Table structure for file_info
@@ -102,6 +102,45 @@ CREATE TABLE `file_info` (
 
 -- ----------------------------
 -- Records of file_info
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for insurance_company_info
+-- ----------------------------
+DROP TABLE IF EXISTS `insurance_company_info`;
+CREATE TABLE `insurance_company_info` (
+  `id` varchar(255) NOT NULL,
+  `logo_url` varchar(500) DEFAULT NULL,
+  `company_name` varchar(64) DEFAULT NULL COMMENT '公司名称',
+  `hot_line` varchar(20) DEFAULT NULL COMMENT '热线电话',
+  `mark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of insurance_company_info
+-- ----------------------------
+INSERT INTO `insurance_company_info` VALUES ('5e3aa4c0-9c02-11e9-aad3-034a37e4f7c6', '', '新华保险0', '10010', '', '2019-07-01 21:15:59', '2019-07-01 21:15:59');
+INSERT INTO `insurance_company_info` VALUES ('938c3310-9c01-11e9-aad3-034a37e4f7c6', '', '康泰保险', '10086', '', '2019-07-01 21:10:19', '2019-07-01 21:10:19');
+INSERT INTO `insurance_company_info` VALUES ('bb96dc30-9c00-11e9-aad3-034a37e4f7c6', 'b76392c0-9c00-11e9-aad3-034a37e4f7c6', '新华保险', '10010', '', '2019-07-01 21:04:17', '2019-07-01 21:04:17');
+
+-- ----------------------------
+-- Table structure for like_info
+-- ----------------------------
+DROP TABLE IF EXISTS `like_info`;
+CREATE TABLE `like_info` (
+  `id` varchar(255) NOT NULL,
+  `like_from` varchar(255) DEFAULT NULL,
+  `like_to` varchar(255) DEFAULT NULL,
+  `like_status` int(8) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of like_info
 -- ----------------------------
 
 -- ----------------------------
@@ -140,7 +179,7 @@ CREATE TABLE `order_info` (
 -- ----------------------------
 INSERT INTO `order_info` VALUES ('1cc58330-967f-11e9-87d6-e5130cf4051d', '1', '30b13970-0052-11e9-8735-190581b1698d', '11', '11', '11', '2019-01-24 08:00:00', '1', '3.00', '3.33', '打', '1', '2323', '1', '2019-06-24', '2323', '打的', '1', '2019-06-24', '2333', '131', '2019-06-24 20:53:49', '2019-06-24 21:12:30');
 INSERT INTO `order_info` VALUES ('1cc58330-967f-11e9-87d6-e5130cf4051e', '1', '30b13970-0052-11e9-8735-190581b1698d', '11', '11', '11', '2018-06-24 08:00:00', '1', '3.00', '3.33', '打', '1', '2323', '1', '2019-06-24', '2323', '打的', '1', '2019-06-24', '2333', '131', '2019-06-24 20:53:49', '2019-06-24 21:12:30');
-INSERT INTO `order_info` VALUES ('1cc58330-967f-11e9-87d6-e5130cf4051f', '1', '30b13970-0052-11e9-8735-190581b1698d', '22', '11', '11', '2019-06-24 08:00:00', '1', '3.00', '3.33', '打', '1', '2323', '1', '2019-06-24', '2323', '打的', '1', '2019-06-24', '2333', '131', '2019-06-24 20:53:49', '2019-06-24 21:12:30');
+INSERT INTO `order_info` VALUES ('1cc58330-967f-11e9-87d6-e5130cf4051f', '1', '30b13970-0052-11e9-8735-190581b1698d', '22', '11', '11', '2019-07-01 23:05:02', '1', '3.00', '3.33', '打', '1', '2323', '1', '2019-06-24', '2323', '打的', '1', '2019-06-24', '2333', '131', '2019-06-24 20:53:49', '2019-06-24 21:12:30');
 
 -- ----------------------------
 -- Table structure for thumbup_info
@@ -163,25 +202,26 @@ CREATE TABLE `thumbup_info` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info` (
-  `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `city` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `headimgurl` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `realname` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `nickname` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `province` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` varchar(255) NOT NULL,
+  `city` varchar(64) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `headimgurl` varchar(255) DEFAULT NULL,
+  `realname` varchar(64) DEFAULT NULL,
+  `company` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `nickname` varchar(64) DEFAULT NULL,
+  `province` varchar(64) DEFAULT NULL,
   `sex` int(11) DEFAULT NULL,
-  `telephone` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `telephone` varchar(11) NOT NULL,
   `birthday` date DEFAULT NULL,
   `created_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
-  `company` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES ('30b13970-0052-11e9-8735-190581b1698c', '武汉', '中国', '', '钟正', null, '哈哈', '湖北', '0', '15527188176', '2019-06-07', '2019-06-28 21:29:16', '2019-06-07 10:27:15', '中国人保');
-INSERT INTO `user_info` VALUES ('30b13970-0052-11e9-8735-190581b1698d', '武汉', '中国', '', '王玮额外', '111111', '哈哈', '湖北', '0', '15527188176', '2019-06-07', '2019-06-29 22:22:55', '2019-06-29 22:22:55', '中国人保');
+INSERT INTO `user_info` VALUES ('30b13970-0052-11e9-8735-190581b1698c', '武汉', '中国', '', '钟正', '5e3aa4c0-9c02-11e9-aad3-034a37e4f7c6', null, '哈哈', '湖北', '0', '15527188176', '2019-06-07', '2019-07-02 21:31:58', '2019-06-07 10:27:15');
+INSERT INTO `user_info` VALUES ('30b13970-0052-11e9-8735-190581b1698d', '武汉', '中国', '', '王玮额外', '5e3aa4c0-9c02-11e9-aad3-034a37e4f7c6', '222222', '哈哈', '湖北', '0', '15527188176', '2019-06-07', '2019-07-02 21:44:58', '2019-07-02 21:44:58');
+INSERT INTO `user_info` VALUES ('ec166ce0-9bfb-11e9-acc9-d3f12ecb07fb', null, null, null, 'dad', '938c3310-9c01-11e9-aad3-034a37e4f7c6', '333333', null, null, null, '13344555544', null, '2019-07-02 21:32:19', '2019-07-02 19:29:48');

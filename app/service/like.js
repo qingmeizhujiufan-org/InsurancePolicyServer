@@ -15,7 +15,7 @@ class LikeService extends Service {
 
     const res = await this.ctx.model.Like.find({
       attributes: [
-        [Sequelize.fn('COUNT', Sequelize.col('*')), 'LikeNum'],
+        [Sequelize.fn('COUNT', Sequelize.col('*')), 'likeNum'],
       ],
       where: {
         '$and': {
@@ -37,7 +37,7 @@ class LikeService extends Service {
 
     const res = await this.ctx.model.Like.find({
       attributes: [
-        [Sequelize.fn('COUNT', Sequelize.col('*')), 'LikeNum'],
+        [Sequelize.fn('COUNT', Sequelize.col('*')), 'likeNum'],
       ],
       where: {
         '$and': {
@@ -57,7 +57,7 @@ class LikeService extends Service {
     const range = getYearRange();
     const res = await this.ctx.model.Like.find({
       attributes: [
-        [Sequelize.fn('COUNT', Sequelize.col('*')), 'LikeNum']
+        [Sequelize.fn('COUNT', Sequelize.col('*')), 'likeNum']
       ],
       where: {
         '$and': {

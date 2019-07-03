@@ -317,10 +317,40 @@ class UserController extends BaseController {
     params.time = parseInt(params.time);
     params.condition = parseInt(params.condition);
 
-    const sumOne = await ctx.service.user.querySumOne(params);
+
+    const { id = '', time = 0, condition = 0 } = params;
+
+    const user = await ctx.service.user.queryOneUser({ id });
+
+    let order = {},
+      like = {};
+
+    if (time === 0) {
+      order = await ctx.service.order.queryOrderMonthSum({ id });
+      like = await ctx.service.like.queryLikeMonthSum({ id });
+    }
+
+    if (time === 1) {
+      order = await ctx.service.order.queryOrderQuarterSum({ id });
+      like = await ctx.service.like.queryLikeMonthSum({ id });
+    }
+
+    if (time === 2) {
+      order = await ctx.service.order.queryOrderYearSum({ id });
+      like = await ctx.service.like.queryLikeMonthSum({ id });
+    }
+
+    const insuranceCompany = user.InsuranceCompany;
+
     this.success({
       backMsg: "获取统计信息成功！",
-      backData: sumOne
+      backData: {
+        id: user.id,
+        realname: user.realname,
+        companyName: insuranceCompany.companyName,
+        order,
+        like
+      }
     });
   }
 }
