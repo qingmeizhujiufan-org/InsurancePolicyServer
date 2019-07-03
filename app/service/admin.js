@@ -73,7 +73,7 @@ class AdminService extends Service {
         return res;
     }
 
-    async qureyOneUser(params) {
+    async queryOneUser(params) {
         const res = await this.ctx.model.Admin.findOne({
             where: {id: params.id}
         });

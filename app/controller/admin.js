@@ -54,12 +54,12 @@ class AdminController extends BaseController {
         });
     }
 
-    async qureyOneUser() {
+    async queryOneUser() {
         const ctx = this.ctx;
         const params = ctx.query;
         console.log('params ===', params);
 
-        const result = await ctx.service.admin.qureyOneUser(params);
+        const result = await ctx.service.admin.queryOneUser(params);
 
         if (result) {
             const picList = await ctx.service.file.queryListByIds(result.avatarSrc);
