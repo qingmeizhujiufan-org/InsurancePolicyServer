@@ -171,7 +171,7 @@ class UserService extends Service {
     const InsuranceCompany = ctx.model.InsuranceCompany;
 
     User.belongsTo(InsuranceCompany, { foreignKey: 'company', targetKey: 'id' })
-    Order.belongsTo(User, { foreignKey: 'userId', targetKey: 'id' });
+    User.hasMany(Order, { foreignKey: 'userId', sourceKey: 'id' });
     User.hasMany(Like, { foreignKey: 'likeTo', sourceKey: 'id' });
 
     const { pageNumber = 1, pageSize = 10, time = 0, condition = 0 } = params;
@@ -200,35 +200,45 @@ class UserService extends Service {
 
 
     const dataList = await Promise.all([
-      Order.findAll({
-        // group: 'userId'
-      }),
-      Order.findAll({
+      User.findAll({}),
+      User.findAll({
         attributes: [
-          [Sequelize.fn('COUNT', Sequelize.col('user_id')), 'orderNum'],
-          [Sequelize.fn('SUM', Sequelize.col('insurance')), 'orderSum']
+          'id', 'realname'
         ],
-        include: [{
-          model: User,
-          attributes: ['id', 'realname'],
-          // include: [{
-          //   model: InsuranceCompany,
-          //   attributes: ['companyName']
-          // }, {
-          //   model: Like,
-          //   attributes: [
-          //     'likeTo',
-          //     [Sequelize.fn('COUNT', Sequelize.col('like_to')), 'likeNum']
-          //   ],
-          //   where: {
-          //     created_at: {
-          //       [Op.between]: [range.beginDate, range.endDate]
-          //     },
-          //   }
-          // }]
-        }],
-        order: [
-          [order, 'DESC']
+        include: [
+        {
+            model: Order,
+            attributes: [
+              'userId',
+              [Sequelize.fn('COUNT', Sequelize.col('user_id')), 'orderNum'],
+              [Sequelize.fn('SUM', Sequelize.col('insurance')), 'orderSum']
+            ],
+            where: {
+              insuredTime: {
+                [Op.between]: [range.beginDate, range.endDate]
+              },
+            },
+            group: 'userId',
+            order: [
+              [[order], 'DESC']
+            ],
+          },
+          {
+            model: InsuranceCompany,
+            attributes: ['id','companyName']
+          }, 
+          {
+            model: Like,
+            attributes: [
+              'likeTo',
+               [Sequelize.fn('COUNT', Sequelize.col('like_to')), 'likeNum'],
+            ],
+            where: {
+              created_at: {
+                [Op.between]: [range.beginDate, range.endDate]
+              },
+            }
+          }
         ],
         // group: 'userId',
         limit: pageSize,
