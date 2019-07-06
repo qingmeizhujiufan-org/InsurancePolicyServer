@@ -82,6 +82,11 @@ module.exports = app => {
     /* 新增保险公司 */
     router.post('/api/insuranceCompany/add', controller.insuranceCompany.add);
 
+    /* 查询渠道列表 */
+    router.get('/api/channel/queryList', controller.channel.queryList);
+    /* 新增渠道 */
+    router.post('/api/channel/add', controller.channel.add);
+
     /*
      * APP接口
      */
