@@ -345,9 +345,19 @@ class UserController extends BaseController {
             }
         }
 
+        let firstUser = list[0].dataValues;
+        if (firstUser.bgId) {
+            const bgFile = await ctx.service.file.queryListById(firstUser.bgId);
+            firstUser.bgFile = bgFile;
+        }
+    
+
         this.success({
             backMsg: "获取统计信息成功！",
-            backData: result
+            backData: {
+                user:result,
+                firstUser
+            }
         });
     }
 }

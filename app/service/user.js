@@ -72,6 +72,7 @@ class UserService extends Service {
                 'realname',
                 'bgId',
                 'headimgurl',
+                'company',
                 [Sequelize.col('InsuranceCompany.company_name'), 'companyName'],
                 [Sequelize.col('File.file_type'), 'fileType']
             ],
@@ -211,6 +212,8 @@ class UserService extends Service {
                 'id',
                 'realname',
                 'headimgurl',
+                'bgId',
+                'company',
                 [Sequelize.col('File.file_type'), 'fileType'],
                 [Sequelize.col('InsuranceCompany.company_name'), 'companyName'],
                 [Sequelize.fn('SUM', Sequelize.col('Orders.insurance')), 'orderSum'],
