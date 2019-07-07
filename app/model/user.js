@@ -28,6 +28,11 @@ module.exports = app => {
             type: STRING(255),
             field: 'headimgurl'
         },
+         //背景图片
+        bgId: {
+            type: STRING(255),
+            field: 'bgId'
+        },
         //真实姓名
         realname: {
             type: STRING(64),

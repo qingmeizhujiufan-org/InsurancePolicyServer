@@ -41,7 +41,8 @@ class FileController extends BaseController {
             images(buffer).save(target, {quality: 50});
 
             this.success({
-                id: result.id
+                id: result.id,
+                fileType: result.fileType
             });
         } else {
             this.fail({

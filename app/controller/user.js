@@ -62,10 +62,11 @@ class UserController extends BaseController {
         console.log('params ===', params);
 
         const result = await ctx.service.user.queryOneUser(params);
-
+        
         if (result) {
-            const picList = await ctx.service.file.queryListByIds(result.headimgurl);
-            result.headimgurl = picList;
+            const bgImg = await ctx.service.file.queryListByIds(result.bgId);
+            result.bgImg = bgImg;
+
             this.success({
                 backMsg: "用户详情查询成功！",
                 backData: result
@@ -80,7 +81,6 @@ class UserController extends BaseController {
     async queryUserSum() {
         const ctx = this.ctx;
         const params = ctx.query;
-        console.log('params ===', params);
 
         let user = await ctx.service.user.queryOneUser(params);
         let month = await ctx.service.order.queryOrderMonthSum(params);
@@ -88,8 +88,10 @@ class UserController extends BaseController {
         let year = await ctx.service.order.queryOrderYearSum(params);
 
         if (user) {
-            const picList = await ctx.service.file.queryListByIds(user.headimgurl);
-            user.headimgurl = picList;
+           
+            const bgImg = await ctx.service.file.queryListById(user.bgId);
+            user.bgId = bgImg;
+
             const result = {
                 user,
                 month,
@@ -316,7 +318,7 @@ class UserController extends BaseController {
         const params = ctx.query;
         params.time = parseInt(params.time);
         params.condition = parseInt(params.condition);
-        const list = await ctx.service.user.queryOneUser(params);
+        const list = await ctx.service.user.querySumOne(params);
 
         let result = {};
         for (let i = 0; i < list.length; i++) {
