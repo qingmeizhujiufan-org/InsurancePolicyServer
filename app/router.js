@@ -83,11 +83,15 @@ module.exports = app => {
     router.get('/api/insuranceCompany/queryList', controller.insuranceCompany.queryList);
     /* 新增保险公司 */
     router.post('/api/insuranceCompany/add', controller.insuranceCompany.add);
+    /* 删除保险公司 */
+    router.post('/api/insuranceCompany/delete', controller.insuranceCompany.delete);
 
     /* 查询渠道列表 */
     router.get('/api/channel/queryList', controller.channel.queryList);
     /* 新增渠道 */
     router.post('/api/channel/add', controller.channel.add);
+    /* 删除渠道 */
+    router.post('/api/channel/delete', controller.channel.delete);
 
     /* 链接查询 */
     router.get('/api/link/queryDetail', controller.link.queryDetail);
