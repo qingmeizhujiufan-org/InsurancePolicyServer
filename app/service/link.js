@@ -4,15 +4,13 @@ const Service = require('egg').Service;
 
 class LinkService extends Service {
 
-    async queryDetail(params) {
-        const res = await this.ctx.model.Link.findOne();
+    async queryDetail() {
+        const res = await this.ctx.model.Link.findAll();
         return res;
     }
 
     async update(params) {
-        const res = await this.ctx.model.Link.update(params, {
-            where: {id: params.id}
-        });
+        const res = await this.ctx.model.Link.update(params, {where: {id: '1'}});
         return res;
     }
 

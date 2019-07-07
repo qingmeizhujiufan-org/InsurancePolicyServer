@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 07/07/2019 20:38:25
+ Date: 07/07/2019 20:59:18
 */
 
 SET NAMES utf8mb4;
@@ -152,10 +152,14 @@ INSERT INTO `insurance_company_info` VALUES ('bb96dc30-9c00-11e9-aad3-034a37e4f7
 -- ----------------------------
 DROP TABLE IF EXISTS `link_info`;
 CREATE TABLE `link_info`  (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `point_mall_url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `customer_consult_url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `feedback_url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `about_url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
+  `about_url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `created_at` datetime(0) DEFAULT NULL,
+  `updated_at` datetime(0) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------

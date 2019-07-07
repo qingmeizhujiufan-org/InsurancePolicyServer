@@ -7,10 +7,10 @@ class LinkController extends BaseController {
 
     async queryDetail() {
         const ctx = this.ctx;
-        const insuranceCompany = await ctx.service.link.queryDetail();
+        const link = await ctx.service.link.queryDetail();
         this.success({
-            backMsg: "获取保险公司列表成功！",
-            backData: insuranceCompany
+            backMsg: "获取链接成功！",
+            backData: link.length > 0 ? link[0] : {}
         });
     }
 

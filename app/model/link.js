@@ -6,6 +6,11 @@ module.exports = app => {
 
     const {UUIDV1, INTEGER, STRING, DATE} = app.Sequelize;
     const Link = app.model.define('Link', {
+        id: {
+            type: STRING(255),
+            primaryKey: true,
+            field: 'id'
+        },
         //积分商城链接
         pointMallUrl: {
             type: STRING(255),
@@ -25,10 +30,23 @@ module.exports = app => {
         aboutUrl: {
             type: INTEGER,
             field: 'about_url'
+        },
+        created_at: {
+            type: DATE,
+            get() {
+                return Moment(this.getDataValue('created_at')).format('YYYY-MM-DD HH:mm:ss');
+            }
+        },
+        updated_at: {
+            type: DATE,
+            get() {
+                return Moment(this.getDataValue('updated_at')).format('YYYY-MM-DD HH:mm:ss');
+            }
         }
     }, {
         freezeTableName: true,
-        tableName: 'link_info'
+        tableName: 'link_info',
+        timestamps: true,
     });
     return Link;
 };

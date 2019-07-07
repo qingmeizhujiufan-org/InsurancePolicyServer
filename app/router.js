@@ -89,6 +89,8 @@ module.exports = app => {
 
     /* 链接查询 */
     router.get('/api/link/queryDetail', controller.link.queryDetail);
+    /* 链接更新 */
+    router.post('/api/link/update', controller.link.update);
 
     /*
      * APP接口
