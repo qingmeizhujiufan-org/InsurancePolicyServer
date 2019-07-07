@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 06/07/2019 14:41:05
+ Date: 07/07/2019 20:38:25
 */
 
 SET NAMES utf8mb4;
@@ -40,7 +40,7 @@ CREATE TABLE `admin_info`  (
 -- ----------------------------
 -- Records of admin_info
 -- ----------------------------
-INSERT INTO `admin_info` VALUES ('30b13970-0052-11e9-8735-190581b1698c', 'wujie admin', 'admin', '000000', '000', 0, 'admin', 'admin', '13112345543', '5b6ea240-6c88-11e9-98f2-9f79f029079a', '2018-12-15 10:14:21.000000', '2019-05-02 11:14:13.000000');
+INSERT INTO `admin_info` VALUES ('30b13970-0052-11e9-8735-190581b1698c', '保险平台管理员', 'admin', '000000', '000', 0, 'admin', 'admin', '13112345543', '', '2018-12-15 10:14:21.000000', '2019-07-06 15:32:10.000000');
 
 -- ----------------------------
 -- Table structure for channel_info
@@ -148,16 +148,14 @@ INSERT INTO `insurance_company_info` VALUES ('938c3310-9c01-11e9-aad3-034a37e4f7
 INSERT INTO `insurance_company_info` VALUES ('bb96dc30-9c00-11e9-aad3-034a37e4f7c6', 'b76392c0-9c00-11e9-aad3-034a37e4f7c6', '新华保险', '10010', '', '2019-07-01 21:04:17', '2019-07-01 21:04:17');
 
 -- ----------------------------
--- Table structure for like_info
+-- Table structure for link_info
 -- ----------------------------
-DROP TABLE IF EXISTS `like_info`;
-CREATE TABLE `like_info`  (
-  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `like_from` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `like_to` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `like_status` int(8) DEFAULT NULL,
-  `created_at` datetime(0) DEFAULT NULL,
-  `updated_at` datetime(0) DEFAULT NULL
+DROP TABLE IF EXISTS `link_info`;
+CREATE TABLE `link_info`  (
+  `point_mall_url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `customer_consult_url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `feedback_url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `about_url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -194,8 +192,9 @@ CREATE TABLE `order_info`  (
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
-INSERT INTO `order_info` VALUES ('1cc58330-967f-11e9-87d6-e5130cf4051d', '1', '30b13970-0052-11e9-8735-190581b1698d', '11', '11', '11', '2019-01-24 08:00:00', 1, 3.00, 3.33, '打', '1', '2323', 1, '2019-06-24', '2323', '打的', 1, '2019-06-24', '2333', '131', '2019-06-24 20:53:49', '2019-06-24 21:12:30');
-INSERT INTO `order_info` VALUES ('1cc58330-967f-11e9-87d6-e5130cf4051e', '1', '30b13970-0052-11e9-8735-190581b1698d', '11', '11', '11', '2018-06-24 08:00:00', 1, 3.00, 3.33, '打', '1', '2323', 1, '2019-06-24', '2323', '打的', 1, '2019-06-24', '2333', '131', '2019-06-24 20:53:49', '2019-06-24 21:12:30');
+INSERT INTO `order_info` VALUES ('1cc58330-967f-11e9-87d6-e5130cf40517', '1', '30b13970-0052-11e9-8735-190581b1698d', '22', '11', '11', '2019-07-01 23:05:02', 1, 3.00, 1.00, '打', '1', '2323', 1, '2019-06-24', '2323', '打的', 1, '2019-06-24', '2333', '131', '2019-07-24 20:53:49', '2019-06-24 21:12:30');
+INSERT INTO `order_info` VALUES ('1cc58330-967f-11e9-87d6-e5130cf4051d', '1', '30b13970-0052-11e9-8735-190581b1698d', '11', '11', '11', '2019-01-24 08:00:00', 1, 3.00, 3.33, '打', '1', '2323', 1, '2019-06-24', '2323', '打的', 1, '2019-06-24', '2333', '131', '2019-07-24 20:53:49', '2019-06-24 21:12:30');
+INSERT INTO `order_info` VALUES ('1cc58330-967f-11e9-87d6-e5130cf4051e', '1', '30b13970-0052-11e9-8735-190581b1698c', '11', '11', '11', '2018-06-24 08:00:00', 1, 3.00, 3.33, '打', '1', '2323', 1, '2019-06-24', '2323', '打的', 1, '2019-06-24', '2333', '131', '2019-07-24 20:53:49', '2019-06-24 21:12:30');
 INSERT INTO `order_info` VALUES ('1cc58330-967f-11e9-87d6-e5130cf4051f', '1', '30b13970-0052-11e9-8735-190581b1698d', '22', '11', '11', '2019-07-01 23:05:02', 1, 3.00, 3.33, '打', '1', '2323', 1, '2019-06-24', '2323', '打的', 1, '2019-06-24', '2333', '131', '2019-06-24 20:53:49', '2019-06-24 21:12:30');
 
 -- ----------------------------

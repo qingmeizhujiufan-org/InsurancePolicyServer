@@ -72,20 +72,74 @@ class UserService extends Service {
     }
 
     async queryOneUser(params) {
+        const Sequelize = this.app.Sequelize;
+        const Op = Sequelize.Op;
         const ctx = this.ctx;
-        const User = ctx.model.User;
-        const InsuranceCompany = ctx.model.InsuranceCompany;
-        User.belongsTo(InsuranceCompany, {foreignKey: 'company', targetKey: 'id'})
+        const {User, Order, InsuranceCompany, Thumbup} = ctx.model;
 
-        const res = await User.findOne({
-            where: {
-                ...params
-            },
-            include: [{
-                model: InsuranceCompany,
-                attributes: ['id', 'companyName']
-            }]
+        User.belongsTo(InsuranceCompany, {foreignKey: 'company'});
+        User.hasMany(Order, {foreignKey: 'userId'});
+        User.hasMany(Thumbup, {foreignKey: 'id'});
+
+        const {time = 0, condition = 0} = params;
+        let range = {};
+        let order = '';
+
+        if (time === 0) {
+            range = getMonthRange();
+        }
+
+        if (time === 1) {
+            range = getQuarterRange();
+        }
+
+        if (time === 2) {
+            range = getYearRange();
+        }
+
+        if (condition === 0) {
+            order = Sequelize.fn('SUM', Sequelize.col('Orders.insurance'));
+        }
+        if (condition === 1) {
+            order = Sequelize.fn('COUNT', Sequelize.col('Orders.id'));
+        }
+
+        const res = await User.findAll({
+            attributes: [
+                'id',
+                'realname',
+                [Sequelize.col('InsuranceCompany.company_name'), 'companyName'],
+                [Sequelize.fn('SUM', Sequelize.col('Orders.insurance')), 'orderSum'],
+                [Sequelize.fn('COUNT', Sequelize.col('Orders.id')), 'orderNum'],
+                [Sequelize.fn('COUNT', Sequelize.col('Thumbups.id')), 'thumbupNum'],
+            ],
+            include: [
+                {
+                    model: Order,
+                    attributes: [],
+                    where: {
+                        created_at: {
+                            [Op.between]: [range.beginDate, range.endDate]
+                        },
+                    },
+                    required: false
+                },
+                {
+                    model: InsuranceCompany,
+                    attributes: []
+                }, {
+                    model: Thumbup,
+                    attributes: []
+                }
+            ],
+            group: 'id',
+            order: [
+                [order, 'DESC'],
+                ['created_at', 'DESC']
+            ],
+            subQuery: false
         });
+
         return res;
     }
 
@@ -172,7 +226,6 @@ class UserService extends Service {
         User.hasMany(Thumbup, {foreignKey: 'id'});
 
         const {pageNumber = 1, pageSize = 10, time = 0, condition = 0} = params;
-        const whereCondition = {};
         let range = {};
         let order = '';
 

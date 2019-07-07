@@ -87,6 +87,9 @@ module.exports = app => {
     /* 新增渠道 */
     router.post('/api/channel/add', controller.channel.add);
 
+    /* 链接查询 */
+    router.get('/api/link/queryDetail', controller.link.queryDetail);
+
     /*
      * APP接口
      */
