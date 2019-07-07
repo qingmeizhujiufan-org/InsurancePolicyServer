@@ -6,14 +6,14 @@ module.exports = app => {
 
     const {UUIDV1, STRING, DATE} = app.Sequelize;
     const Thumbup = app.model.define('Thumbup', {
-        //id
+        //被点赞人ID
         id: {
             type: STRING(255),
             defaultValue: UUIDV1,
             primaryKey: true,
             field: 'id'
         },
-        //业务员ID
+        //点赞人ID
         userId: {
             type: STRING(255),
             field: 'user_id'
