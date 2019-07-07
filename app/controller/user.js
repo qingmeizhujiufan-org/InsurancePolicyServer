@@ -62,7 +62,7 @@ class UserController extends BaseController {
         console.log('params ===', params);
 
         const result = await ctx.service.user.queryOneUser(params);
-        
+
         if (result) {
             const bgImg = await ctx.service.file.queryListByIds(result.bgId);
             result.bgImg = bgImg;
@@ -88,7 +88,7 @@ class UserController extends BaseController {
         let year = await ctx.service.order.queryOrderYearSum(params);
 
         if (user) {
-           
+
             const bgImg = await ctx.service.file.queryListById(user.bgId);
             user.bgId = bgImg;
 
@@ -307,9 +307,25 @@ class UserController extends BaseController {
         params.condition = parseInt(params.condition);
 
         const sumList = await ctx.service.user.querySumList(params);
+        const {content = [], ...rest} = sumList;
+        const result = [], promiseList = [];
+        content.map(item => {
+            const _item = item.dataValues;
+            result.push(_item);
+            promiseList.push(ctx.service.file.queryListById(_item.bgId));
+        });
+        const resultList = await Promise.all(promiseList);
+        console.log('resultList == ', resultList);
+        result.map((item, index) => {
+            item.bgFile = resultList[index] && resultList[index].dataValues;
+        });
+
         this.success({
             backMsg: "获取统计列表成功！",
-            backData: sumList
+            backData: {
+                ...rest,
+                content: result
+            }
         });
     }
 
@@ -322,7 +338,7 @@ class UserController extends BaseController {
 
         let result = {};
         for (let i = 0; i < list.length; i++) {
-            if(list[i].id === params.id) {
+            if (list[i].id === params.id) {
                 result = list[i].dataValues;
                 result.index = i + 1;
                 break;
