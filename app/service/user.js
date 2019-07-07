@@ -340,6 +340,26 @@ class UserService extends Service {
             totalElements: dataList[0].length
         };
     }
+
+    async like(params) {
+       const row ={
+        id: params.thumbupId,
+        userId: params.userId
+       };
+       const res = await this.ctx.model.Thumbup.create(row);
+       return res;
+    }
+
+    async unlike(params) {
+       const row ={
+        id: params.thumbupId,
+        userId: params.userId
+       };
+       const res = await this.ctx.model.Thumbup.destroy({
+        where: row
+       });
+       return res;
+    }
 }
 
 module.exports = UserService;

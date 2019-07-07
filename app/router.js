@@ -75,7 +75,9 @@ module.exports = app => {
     /*业务员个人业务统计*/
     router.get('/api/user/querySumOne', controller.user.querySumOne);
     /*业务员点赞*/
-    // router.post('/api/user/like', controller.user.like);
+    router.post('/api/user/like', controller.user.like);
+    router.post('/api/user/unlike', controller.user.unlike);
+
 
     /* 查询保险公司列表 */
     router.get('/api/insuranceCompany/queryList', controller.insuranceCompany.queryList);
