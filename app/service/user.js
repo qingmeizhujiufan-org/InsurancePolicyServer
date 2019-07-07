@@ -211,11 +211,11 @@ class UserService extends Service {
         'id',
         'realname',
         'headimgurl',
-        [Sequelize.col('File.file_type'), 'fileType']
+        [Sequelize.col('File.file_type'), 'fileType'],
         [Sequelize.col('InsuranceCompany.company_name'), 'companyName'],
         [Sequelize.fn('SUM', Sequelize.col('Orders.insurance')), 'orderSum'],
         [Sequelize.fn('COUNT', Sequelize.col('Orders.id')), 'orderNum'],
-        [Sequelize.fn('COUNT', Sequelize.col('Thumbups.id')), 'thumbupNum'],
+        [Sequelize.fn('COUNT', Sequelize.col('Thumbups.id')), 'thumbupNum']
       ],
       include: [{
           model: Order,
@@ -232,6 +232,9 @@ class UserService extends Service {
           attributes: []
         }, {
           model: Thumbup,
+          attributes: []
+        }, {
+          model: File,
           attributes: []
         }
       ],
@@ -288,11 +291,11 @@ class UserService extends Service {
           'id',
           'realname',
           'headimgurl',
-          [Sequelize.col('File.file_type'), 'fileType']
+          [Sequelize.col('File.file_type'), 'fileType'],
           [Sequelize.col('InsuranceCompany.company_name'), 'companyName'],
           [Sequelize.fn('SUM', Sequelize.col('Orders.insurance')), 'orderSum'],
           [Sequelize.fn('COUNT', Sequelize.col('Orders.id')), 'orderNum'],
-          [Sequelize.fn('COUNT', Sequelize.col('Thumbups.id')), 'thumbupNum'],
+          [Sequelize.fn('COUNT', Sequelize.col('Thumbups.id')), 'thumbupNum']
         ],
         include: [{
             model: Order,
@@ -309,6 +312,9 @@ class UserService extends Service {
             attributes: []
           }, {
             model: Thumbup,
+            attributes: []
+          }, {
+            model: File,
             attributes: []
           }
         ],

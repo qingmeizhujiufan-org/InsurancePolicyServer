@@ -15,7 +15,7 @@ class FileService extends Service {
 
     return {
       rowsAffected: res,
-      id: params.id
+      id: params.id,
     };
   }
 

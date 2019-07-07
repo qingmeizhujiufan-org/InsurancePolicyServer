@@ -42,7 +42,7 @@ class FileController extends BaseController {
 
             this.success({
                 id: result.id,
-                fileType: result.fileType
+                fileType: path.extname(filename)
             });
         } else {
             this.fail({
