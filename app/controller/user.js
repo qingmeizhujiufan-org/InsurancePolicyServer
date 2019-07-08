@@ -316,7 +316,7 @@ class UserController extends BaseController {
             result.push(_item);
             if (params.userId) {
                 promiseList.push(ctx.service.thumbup.findById({
-                    id: _item.id,
+                    thumbupId: _item.id,
                     userId: params.userId
                 }));
             }
