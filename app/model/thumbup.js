@@ -13,6 +13,11 @@ module.exports = app => {
             primaryKey: true,
             field: 'id'
         },
+         //被赞人ID
+        thumbupId: {
+            type: STRING(255),
+            field: 'thumbup_id'
+        },
         //点赞人ID
         userId: {
             type: STRING(255),

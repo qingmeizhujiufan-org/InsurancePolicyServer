@@ -74,7 +74,7 @@ class ThumbupService extends Service {
     async findById(params) {
         const res = await this.ctx.model.Thumbup.findOne({
             where: {
-                id:params.id,
+                thumbupId:params.thumbupId,
                 userId: params.userId
             }
         });

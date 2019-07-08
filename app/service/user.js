@@ -181,7 +181,7 @@ class UserService extends Service {
 
         User.belongsTo(InsuranceCompany, {foreignKey: 'company'});
         User.hasMany(Order, {foreignKey: 'userId'});
-        User.hasMany(Thumbup, {foreignKey: 'id'});
+        User.hasMany(Thumbup, {foreignKey: 'thumbupId'});
         User.belongsTo(File, {foreignKey: 'headimgurl'});
 
         const {time = 0, condition = 0} = params;
@@ -218,7 +218,7 @@ class UserService extends Service {
                 [Sequelize.col('InsuranceCompany.company_name'), 'companyName'],
                 [Sequelize.fn('SUM', Sequelize.col('Orders.insurance')), 'orderSum'],
                 [Sequelize.fn('COUNT', Sequelize.col('Orders.id')), 'orderNum'],
-                [Sequelize.fn('COUNT', Sequelize.col('Thumbups.id')), 'thumbupNum']
+                [Sequelize.fn('COUNT', Sequelize.col('Thumbups.thumbup_id')), 'thumbupNum']
             ],
             include: [{
                 model: Order,
@@ -261,7 +261,7 @@ class UserService extends Service {
 
         User.belongsTo(InsuranceCompany, {foreignKey: 'company'});
         User.hasMany(Order, {foreignKey: 'userId'});
-        User.hasMany(Thumbup, {foreignKey: 'id'});
+        User.hasMany(Thumbup, {foreignKey: 'thumbupId'});
         User.belongsTo(File, {foreignKey: 'headimgurl'});
 
         const {pageNumber = 1, pageSize = 10, time = 0, condition = 0} = params;
@@ -299,7 +299,7 @@ class UserService extends Service {
                     [Sequelize.col('InsuranceCompany.company_name'), 'companyName'],
                     [Sequelize.fn('SUM', Sequelize.col('Orders.insurance')), 'orderSum'],
                     [Sequelize.fn('COUNT', Sequelize.col('Orders.id')), 'orderNum'],
-                    [Sequelize.fn('COUNT', Sequelize.col('Thumbups.id')), 'thumbupNum']
+                    [Sequelize.fn('COUNT', Sequelize.col('Thumbups.thumbup_id')), 'thumbupNum']
                 ],
                 include: [{
                     model: Order,
@@ -337,13 +337,14 @@ class UserService extends Service {
             content: dataList[1],
             pageNumber,
             pageSize,
+            totalPages: Math.ceil(dataList[0].length/pageSize),
             totalElements: dataList[0].length
         };
     }
 
     async like(params) {
        const row ={
-        id: params.thumbupId,
+        thumbupId: params.thumbupId,
         userId: params.userId
        };
        const res = await this.ctx.model.Thumbup.create(row);
@@ -352,7 +353,7 @@ class UserService extends Service {
 
     async unlike(params) {
        const row ={
-        id: params.thumbupId,
+        thumbupId: params.thumbupId,
         userId: params.userId
        };
        const res = await this.ctx.model.Thumbup.destroy({
