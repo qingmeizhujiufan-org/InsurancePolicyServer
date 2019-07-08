@@ -51,7 +51,7 @@ module.exports = app => {
     /* 业务员登录 */
     router.post('/api/user/login', controller.user.login);
     /* 业务员注册 */
-    router.post('/api/user/add', controller.user.login);
+    router.post('/api/user/add', controller.user.add);
     /* 查询业务员列表 */
     router.get('/api/user/queryList', controller.user.queryList);
     /* 业务员获取验证码 */
