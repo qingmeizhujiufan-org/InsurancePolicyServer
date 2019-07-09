@@ -37,12 +37,12 @@ class orderController extends BaseController {
 
         if (result) {
             this.success({
-                backMsg: "客户详情查询成功！",
+                backMsg: "订单详情查询成功！",
                 backData: result
             });
         } else {
             this.fail({
-                backMsg: "客户详情查询失败！",
+                backMsg: "订单详情查询失败！",
             });
         }
     }
@@ -62,17 +62,17 @@ class orderController extends BaseController {
 
             if (result.dataValues) {
                 this.success({
-                    backMsg: "新增客户成功！",
+                    backMsg: "新增订单成功！",
                     backData: result
                 });
             } else {
                 this.fail({
-                    backMsg: "新增客户失败！"
+                    backMsg: "新增订单失败！"
                 });
             }
         } else {
             this.fail({
-                backMsg: "客户名已存在!"
+                backMsg: "订单编号已存在!"
             });
         }
     }
@@ -84,11 +84,11 @@ class orderController extends BaseController {
 
         if (result) {
             this.success({
-                backMsg: "客户信息修改成功",
+                backMsg: "订单信息修改成功",
             });
         } else {
             this.fail({
-                backMsg: "客户信息修改失败！"
+                backMsg: "订单信息修改失败！"
             });
         }
     }
@@ -102,11 +102,11 @@ class orderController extends BaseController {
         console.log('result ===', result)
         if (result) {
             this.success({
-                backMsg: "客户删除成功",
+                backMsg: "订单删除成功",
             });
         } else {
             this.fail({
-                backMsg: "客户删除失败！"
+                backMsg: "订单删除失败！"
             });
         }
     }
@@ -118,12 +118,12 @@ class orderController extends BaseController {
         const result = await ctx.service.order.frozen(params);
         if (result) {
             this.success({
-                backMsg: isFrozen ? "客户冻结成功！" : "客户解冻成功！",
+                backMsg: isFrozen ? "订单冻结成功！" : "订单解冻成功！",
                 backData: result
             });
         } else {
             this.fail({
-                backMsg: isFrozen ? "客户冻结成失败！" : "客户解冻失败！"
+                backMsg: isFrozen ? "订单冻结成失败！" : "订单解冻失败！"
             });
         }
     }

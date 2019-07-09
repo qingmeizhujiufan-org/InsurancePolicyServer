@@ -337,7 +337,6 @@ class UserService extends Service {
             content: dataList[1],
             pageNumber,
             pageSize,
-            totalPages: Math.ceil(dataList[0].length/pageSize),
             totalElements: dataList[0].length
         };
     }
