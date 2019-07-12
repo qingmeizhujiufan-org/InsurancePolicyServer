@@ -50,13 +50,10 @@ class InsuranceCompanyService extends Service {
         return res;
     }
 
-    async queryOne(params) {
-        const {id, userId} = params;
+    async queryDetail(params) {
+        const {id} = params;
         const res = await this.ctx.model.InsuranceCompany.findOne({
-            where: {
-                id,
-                userId
-            }
+            where: {id}
         });
         return res;
     }
@@ -75,7 +72,7 @@ class InsuranceCompanyService extends Service {
         return res;
     }
 
-     async findById(params) {
+    async findById(params) {
         const res = await this.ctx.model.InsuranceCompany.findOne({
             attributes: ['companyName'],
             where: {

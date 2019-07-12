@@ -11,14 +11,24 @@ module.exports = app => {
             primaryKey: true,
             field: 'id'
         },
+        //产品销量榜链接
+        productSellingUrl: {
+            type: STRING(500),
+            field: 'product_selling_url'
+        },
+        //公司偿付榜链接
+        companyPayUrl: {
+            type: STRING(500),
+            field: 'company_pay_url'
+        },
         //积分商城链接
         pointMallUrl: {
-            type: STRING(255),
+            type: STRING(500),
             field: 'point_mall_url'
         },
         //客户咨询链接
         customerConsultUrl: {
-            type: STRING(255),
+            type: STRING(500),
             field: 'customer_consult_url'
         },
         //意见反馈链接

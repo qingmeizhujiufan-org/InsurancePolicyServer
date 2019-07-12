@@ -17,12 +17,12 @@ class ChannelController extends BaseController {
         });
     }
 
-    async queryOne() {
+    async queryDetail() {
         const ctx = this.ctx;
         const params = ctx.query;
         console.log('params ===', params);
 
-        const result = await ctx.service.channel.queryOne(params);
+        const result = await ctx.service.channel.queryDetail(params);
 
         if (result) {
             // const picList = await ctx.service.file.queryListByIds(result.avatarSrc);

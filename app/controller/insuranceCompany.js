@@ -17,16 +17,14 @@ class insuranceCompanyController extends BaseController {
         });
     }
 
-    async queryOne() {
+    async queryDetail() {
         const ctx = this.ctx;
         const params = ctx.query;
         console.log('params ===', params);
 
-        const result = await ctx.service.insuranceCompany.queryOne(params);
+        const result = await ctx.service.insuranceCompany.queryDetail(params);
 
         if (result) {
-            // const picList = await ctx.service.file.queryListByIds(result.avatarSrc);
-            // result.avatarSrc = picList;
             this.success({
                 backMsg: "保险公司详情查询成功！",
                 backData: result

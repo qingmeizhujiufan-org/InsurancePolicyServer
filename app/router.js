@@ -81,15 +81,23 @@ module.exports = app => {
 
     /* 查询保险公司列表 */
     router.get('/api/insuranceCompany/queryList', controller.insuranceCompany.queryList);
+    /* 查询保险公司详情 */
+    router.get('/api/insuranceCompany/queryDetail', controller.insuranceCompany.queryDetail);
     /* 新增保险公司 */
     router.post('/api/insuranceCompany/add', controller.insuranceCompany.add);
+    /* 更新保险公司 */
+    router.post('/api/insuranceCompany/update', controller.insuranceCompany.update);
     /* 删除保险公司 */
     router.post('/api/insuranceCompany/delete', controller.insuranceCompany.delete);
 
     /* 查询渠道列表 */
     router.get('/api/channel/queryList', controller.channel.queryList);
+    /* 查询渠道详情 */
+    router.get('/api/channel/queryDetail', controller.channel.queryDetail);
     /* 新增渠道 */
     router.post('/api/channel/add', controller.channel.add);
+    /* 更新渠道 */
+    router.post('/api/channel/update', controller.channel.update);
     /* 删除渠道 */
     router.post('/api/channel/delete', controller.channel.delete);
 

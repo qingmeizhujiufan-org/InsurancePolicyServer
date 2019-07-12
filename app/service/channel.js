@@ -50,13 +50,10 @@ class ChannelService extends Service {
         return res;
     }
 
-    async queryOne(params) {
-        const {id, userId} = params;
+    async queryDetail(params) {
+        const {id} = params;
         const res = await this.ctx.model.Channel.findOne({
-            where: {
-                id,
-                userId
-            }
+            where: {id}
         });
         return res;
     }
