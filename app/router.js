@@ -61,8 +61,6 @@ module.exports = app => {
     /* 业务员获取验证码 */
     router.get('/api/user/getCode', controller.user.getCode);
     /* 业务员验证码校验 */
-    router.get('/api/user/getCode', controller.user.getCode);
-    /* 查询业务员列表 */
     router.post('/api/user/checkCode', controller.user.checkCode);
     /*业务员业务统计详情*/
     router.get('/api/user/queryUserSum', controller.user.queryUserSum);
