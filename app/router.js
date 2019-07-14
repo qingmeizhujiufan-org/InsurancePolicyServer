@@ -38,6 +38,8 @@ module.exports = app => {
     router.get('/api/custom/queryOne', controller.custom.queryOne);
     /*客户更新*/
     router.post('/api/custom/update', controller.custom.update);
+    /*客户删除*/
+    router.post('/api/custom/delete', controller.custom.delete);
 
     /*添加订单*/
     router.post('/api/order/add', controller.order.add);
@@ -47,6 +49,8 @@ module.exports = app => {
     router.get('/api/order/queryOne', controller.order.queryOne);
     /*订单更新*/
     router.post('/api/order/update', controller.order.update);
+    /*订单删除*/
+    router.post('/api/order/delete', controller.order.delete);
 
     /* 业务员登录 */
     router.post('/api/user/login', controller.user.login);

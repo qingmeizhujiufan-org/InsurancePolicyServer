@@ -28,7 +28,7 @@ module.exports = app => {
             type: STRING(255),
             field: 'headimgurl'
         },
-         //背景图片
+        //背景图片
         bgId: {
             type: STRING(255),
             field: 'bgId'
@@ -73,7 +73,9 @@ module.exports = app => {
             type: DATE,
             field: 'birthday',
             get() {
-                return Moment(this.getDataValue('birthday')).format('YYYY-MM-DD');
+                if (this.getDataValue('birthday')) {
+                    return Moment(this.getDataValue('birthday')).format('YYYY-MM-DD');
+                }
             }
         },
         created_at: {

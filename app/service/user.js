@@ -73,6 +73,8 @@ class UserService extends Service {
                 'bgId',
                 'headimgurl',
                 'company',
+                'sex',
+                'telephone',
                 [Sequelize.col('InsuranceCompany.company_name'), 'companyName'],
                 [Sequelize.col('File.file_type'), 'fileType']
             ],

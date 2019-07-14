@@ -41,6 +41,11 @@ module.exports = app => {
             //     return Moment(this.getDataValue('custom_birth')).format('YYYY-MM-DD');
             // }
         },
+        //备注
+        mark: {
+            type: STRING(500),
+            field: 'mark'
+        },
         created_at: {
             type: DATE,
             get() {
