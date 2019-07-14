@@ -155,10 +155,9 @@ class UserController extends BaseController {
 
     // 验证码校验
     const check = await ctx.service.user.checkCode();
-    console.log('params ===', params)
 
     if (check.length > 0) {
-      console.log('check ===', check[0])
+    
       if (check[0].telephone == telephone && check[0].code == code) {
 
         const uniqueUser = await ctx.service.user.findByPhone({ telephone });
@@ -340,7 +339,7 @@ class UserController extends BaseController {
     }
   }
 
-  async checkCode(params) {
+  async checkCode() {
     const ctx = this.ctx;
     const params = ctx.request.body;
     const { telephone, code, password } = params;
