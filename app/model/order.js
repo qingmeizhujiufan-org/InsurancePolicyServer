@@ -96,17 +96,17 @@ module.exports = app => {
             type: STRING(64),
             field: 'insured_name'
         },
-        //投保人性别
+        //被保人性别
         insuredSex: {
             type: INTEGER,
             field: 'insured_sex'
         },
-        //投保人生日
+        //被保人生日
         insuredBirthday: {
             type: DATE,
             field: 'insured_birthday'
         },
-        //投保人电话号码
+        //被保人电话号码
         insuredTelephone: {
             type: STRING(64),
             field: 'insured_telephone'
