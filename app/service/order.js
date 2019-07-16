@@ -22,9 +22,6 @@ class orderService extends Service {
         insurancePolicyNo: {
           '$like': '%' + keyWords + '%'
         },
-        insuranceName: {
-          '$like': '%' + keyWords + '%'
-        },
         policyholderName: {
           '$like': '%' + keyWords + '%'
         },
@@ -37,9 +34,19 @@ class orderService extends Service {
       },
       '$and': {}
     };
+    if (beginDate && !endDate) {
+      whereCondition['$and']['insuredTime'] = {
+        [Op.gte]: new Date(`${beginDate} 00:00:00`)
+      };
+    }
     if (beginDate && endDate) {
       whereCondition['$and']['insuredTime'] = {
         [Op.between]: [new Date(`${beginDate} 00:00:00`), new Date(`${endDate} 23:59:59`)]
+      };
+    }
+    if (!beginDate && endDate) {
+      whereCondition['$and']['insuredTime'] = {
+        [Op.lte]: new Date(`${endDate} 23:59:59`)
       };
     }
     console.log('rest == ', rest);
@@ -69,7 +76,7 @@ class orderService extends Service {
           attributes: []
         }],
         order: [
-          ['created_at', 'DESC']
+          ['insuredTime', 'DESC']
         ],
         limit: pageSize,
         offset: (pageNumber - 1) * pageSize,
