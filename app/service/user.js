@@ -308,7 +308,7 @@ class UserService extends Service {
           [Sequelize.col('File.file_type'), 'fileType'],
           [Sequelize.col('InsuranceCompany.company_name'), 'companyName'],
           [Sequelize.fn('SUM', Sequelize.col('Orders.insurance')), 'orderSum'],
-          [Sequelize.fn('COUNT', Sequelize.col('Orders.id')), 'orderNum'],
+          [Sequelize.fn('COUNT', Sequelize.col('Orders.user_id')), 'orderNum'],
           [Sequelize.fn('COUNT', Sequelize.col('Thumbups.thumbup_id')), 'thumbupNum']
         ],
         include: [{
@@ -363,8 +363,7 @@ class UserService extends Service {
 
   async unlike(params) {
     const row = {
-      thumbupId: params.thumbupId,
-      userId: params.userId
+      id :params.id
     };
     const res = await this.ctx.model.Thumbup.destroy({
       where: row
