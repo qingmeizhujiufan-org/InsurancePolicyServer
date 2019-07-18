@@ -157,7 +157,7 @@ class UserController extends BaseController {
     const check = await ctx.service.user.checkCode();
 
     if (check.length > 0) {
-    
+
       if (check[0].telephone == telephone && check[0].code == code) {
 
         const uniqueUser = await ctx.service.user.findByPhone({ telephone });
@@ -458,7 +458,9 @@ class UserController extends BaseController {
 
     const result = await ctx.service.user.like(params)
     if (result) {
+      const likeRes = await ctx.service.user.countLike(params)
       this.success({
+        backData: likeRes,
         backMsg: "点赞成功"
       });
     } else {
@@ -474,7 +476,9 @@ class UserController extends BaseController {
 
     const result = await ctx.service.user.unlike(params)
     if (result) {
+      const likeRes = await ctx.service.user.countLike(params)
       this.success({
+        backData: likeRes,
         backMsg: "取消点赞成功"
       });
     } else {

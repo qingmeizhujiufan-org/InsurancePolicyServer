@@ -347,7 +347,7 @@ class UserService extends Service {
       content: dataList[1],
       pageNumber,
       pageSize,
-      totalPages: Math.ceil(dataList[0].length/pageSize),
+      totalPages: Math.ceil(dataList[0].length / pageSize),
       totalElements: dataList[0].length
     };
   }
@@ -369,6 +369,20 @@ class UserService extends Service {
     const res = await this.ctx.model.Thumbup.destroy({
       where: row
     });
+    return res;
+  }
+
+  async countLike(params) {
+    const Sequelize = this.app.Sequelize;
+    const { Thumbup } = this.ctx.model
+    const res = await Thumbup.find({
+      attributes: [
+        [Sequelize.fn('COUNT', Sequelize.col('thumbup_id')), 'thumbupNum']
+      ],
+      where: {
+        thumbupId: params.thumbupId
+      }
+    })
     return res;
   }
 }
