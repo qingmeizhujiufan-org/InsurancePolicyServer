@@ -341,8 +341,8 @@ class UserService extends Service {
                 "ORDER BY " +
                 "`Orders`." + order + " DESC, " +
                 "`User`.`created_at` DESC  " +
-                "LIMIT 0, " +
-                "10;", {type:'SELECT'})
+                "LIMIT " + (pageNumber - 1) * pageNumber + ", " +
+                "" + pageNumber + ";", {type:'SELECT'})
         ]);
         console.log('dataList[1] === ', dataList[1]);
 
