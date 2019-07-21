@@ -258,9 +258,7 @@ class UserService extends Service {
             "`id` " +
             "ORDER BY " +
             "`Orders`." + order + " DESC, " +
-            "`User`.`created_at` DESC  " +
-            "LIMIT " + (pageNumber - 1) * pageSize + ", " +
-            "" + pageSize + ";", {type: 'SELECT'});
+            "`User`.`created_at` DESC  ", {type: 'SELECT'});
 
         return res;
     }
