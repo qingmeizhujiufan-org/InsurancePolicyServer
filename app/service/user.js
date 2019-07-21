@@ -211,57 +211,59 @@ class UserService extends Service {
         }
 
         if (condition === 0) {
-            order = Sequelize.fn('SUM', Sequelize.col('Orders.insurance'));
+            order = 'orderSum';
         }
         if (condition === 1) {
-            order = Sequelize.fn('COUNT', Sequelize.col('Orders.id'));
+            order = 'orderNum';
         }
 
-        const res = await User.findAll({
-            attributes: [
-                'id',
-                'realname',
-                'headimgurl',
-                'bgId',
-                'company',
-                [Sequelize.col('File.file_type'), 'fileType'],
-                [Sequelize.col('InsuranceCompany.company_name'), 'companyName'],
-                [Sequelize.fn('SUM', Sequelize.col('Orders.insurance')), 'orderSum'],
-                [Sequelize.fn('COUNT', Sequelize.col('Orders.id')), 'orderNum'],
-                [Sequelize.fn('COUNT', Sequelize.col('Thumbups.thumbup_id')), 'thumbupNum']
-            ],
-            include: [{
-                model: Order,
-                attributes: [],
-                where: {
-                    created_at: {
-                        [Op.between]: [range.beginDate, range.endDate]
-                    },
-                },
-                required: false
-            },
-                {
-                    model: InsuranceCompany,
-                    attributes: []
-                }, {
-                    model: Thumbup,
-                    attributes: []
-                }, {
-                    model: File,
-                    attributes: []
-                }
-            ],
-            group: 'id',
-            order: [
-                [order, 'DESC'],
-                ['created_at', 'DESC']
-            ],
-            subQuery: false
-        });
+        const res = await ctx.model.query("SELECT " +
+            "`User`.`id`, " +
+            "`User`.`realname`, " +
+            "`User`.`headimgurl`, " +
+            "`User`.`bgId`, " +
+            "`File`.`file_type` AS `fileType`, " +
+            "`InsuranceCompany`.`company_name` AS `companyName`, " +
+            "`Orders`.`orderSum`, " +
+            "`Orders`.`orderNum`, " +
+            "`Thumbups`.`thumbupNum` " +
+            "FROM " +
+            "`user_info` AS `User` " +
+            "LEFT OUTER JOIN ( " +
+            "SELECT " +
+            "`Orders`.`id`, " +
+            "`Orders`.`user_id`, " +
+            "SUM( `Orders`.`insurance` ) AS `orderSum`, " +
+            "COUNT( `Orders`.`user_id` ) AS `orderNum`, " +
+            "`Orders`.`created_at` " +
+            "FROM " +
+            "`order_info` AS `Orders` " +
+            "GROUP BY " +
+            "`Orders`.`user_id` " +
+            ") `Orders` ON `User`.`id` = `Orders`.`user_id` " +
+            "AND `Orders`.`created_at` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
+            "AND '" + new Moment(range.endDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
+            "LEFT OUTER JOIN `insurance_company_info` AS `InsuranceCompany` ON `User`.`company` = `InsuranceCompany`.`id` " +
+            "LEFT OUTER JOIN (" +
+            "SELECT " +
+            "`Thumbups`.`thumbup_id`, " +
+            "COUNT( `Thumbups`.`thumbup_id` ) AS `thumbupNum` " +
+            "FROM " +
+            "`thumbup_info` AS `Thumbups` " +
+            "GROUP BY " +
+            "`Thumbups`.`thumbup_id` " +
+            ") `Thumbups` ON `User`.`id` = `Thumbups`.`thumbup_id` " +
+            "LEFT OUTER JOIN `file_info` AS `File` ON `User`.`headimgurl` = `File`.`id` " +
+            "GROUP BY " +
+            "`id` " +
+            "ORDER BY " +
+            "`Orders`." + order + " DESC, " +
+            "`User`.`created_at` DESC  " +
+            "LIMIT " + (pageNumber - 1) * pageSize + ", " +
+            "" + pageSize + ";", {type: 'SELECT'});
 
         return res;
     }
-
 
     async querySumList(params) {
         const Sequelize = this.app.Sequelize;
@@ -342,7 +344,7 @@ class UserService extends Service {
                 "`Orders`." + order + " DESC, " +
                 "`User`.`created_at` DESC  " +
                 "LIMIT " + (pageNumber - 1) * pageSize + ", " +
-                "" + pageSize + ";", {type:'SELECT'})
+                "" + pageSize + ";", {type: 'SELECT'})
         ]);
         console.log('dataList[1] === ', dataList[1]);
 
@@ -377,7 +379,7 @@ class UserService extends Service {
 
     async countLike(params) {
         const Sequelize = this.app.Sequelize;
-        const { Thumbup } = this.ctx.model;
+        const {Thumbup} = this.ctx.model;
         const res = await Thumbup.find({
             attributes: [
                 [Sequelize.fn('COUNT', Sequelize.col('thumbup_id')), 'thumbupNum']
