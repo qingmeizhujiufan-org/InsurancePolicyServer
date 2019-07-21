@@ -430,13 +430,13 @@ class UserController extends BaseController {
         let result = {};
         for (let i = 0; i < list.length; i++) {
             if (list[i].id === params.id) {
-                result = list[i].dataValues;
+                result = list[i];
                 result.index = i + 1;
                 break;
             }
         }
 
-        let firstUser = list[0].dataValues;
+        let firstUser = list[0];
         if (firstUser.bgId) {
             const bgFile = await ctx.service.file.queryListById(firstUser.bgId);
             firstUser.bgFile = bgFile;
