@@ -363,7 +363,8 @@ class UserService extends Service {
 
   async unlike(params) {
     const row = {
-      id :params.id
+      thumbupId: params.thumbupId,
+      userId: params.userId
     };
     const res = await this.ctx.model.Thumbup.destroy({
       where: row
@@ -373,7 +374,7 @@ class UserService extends Service {
 
   async countLike(params) {
     const Sequelize = this.app.Sequelize;
-    const { Thumbup } = this.ctx.model
+    const { Thumbup } = this.ctx.model;
     const res = await Thumbup.find({
       attributes: [
         [Sequelize.fn('COUNT', Sequelize.col('thumbup_id')), 'thumbupNum']
