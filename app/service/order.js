@@ -16,7 +16,7 @@ class orderService extends Service {
         const Sequelize = this.app.Sequelize;
         const Op = Sequelize.Op;
 
-        const {pageNumber = 1, pageSize = 10, keyWords = '', beginDate, endDate, ...rest} = params;
+        const {pageNumber = 1, pageSize = 10, keyWords = '', beginDate, endDate, userId} = params;
         const whereCondition = {
             '$or': {
                 insurancePolicyNo: {
@@ -32,7 +32,9 @@ class orderService extends Service {
                     '$like': '%' + keyWords + '%'
                 },
             },
-            '$and': {}
+            '$and': {
+                userId
+            }
         };
         if (beginDate && !endDate) {
             whereCondition['$and']['insuredTime'] = {
@@ -49,13 +51,7 @@ class orderService extends Service {
                 [Op.lte]: new Date(`${endDate} 23:59:59`)
             };
         }
-        console.log('rest == ', rest);
-        for (let key in rest) {
-            if (rest[key]) {
-                whereCondition['$and'][key] = rest[key];
-            }
-        }
-        console.log('whereCondition == ', whereCondition);
+   
         const dataList = await Promise.all([
             Order.findAll({
                 where: whereCondition,

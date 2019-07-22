@@ -14,10 +14,10 @@ module.exports = app => {
       field: 'id'
     },
     //客户ID
-    // clientId: {
-    //     type: STRING(255),
-    //     field: 'client_id'
-    // },
+    clientId: {
+        type: STRING(255),
+        field: 'client_id'
+    },
     //业务员ID
     userId: {
       type: STRING(255),
