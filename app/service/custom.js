@@ -8,7 +8,7 @@ class CustomService extends Service {
   async queryList(params) {
     const ctx = this.ctx;
     const Custom = ctx.model.Custom;
-    const { pageNumber = 1, pageSize = 10, keyWords = '', ...rest } = params;
+    const { pageNumber = 1, pageSize = 10, keyWords = '', userId } = params;
     const whereCondition = {
       '$or': {
         customName: {
@@ -21,13 +21,11 @@ class CustomService extends Service {
           '$like': '%' + keyWords + '%'
         }
       },
-      '$and': {}
-    };
-    for (let key in rest) {
-      if (rest[key]) {
-        whereCondition['$and'][key] = rest[key];
+      '$and': {
+        userId
       }
-    }
+    };
+   
 
     const dataList = await Promise.all([
       Custom.findAll({
