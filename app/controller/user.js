@@ -171,7 +171,8 @@ class UserController extends BaseController {
         const uniqueUser = await ctx.service.user.findByPhone({ telephone });
         // 是否注册
         if (uniqueUser === null) {
-          const result = await ctx.service.user.add({ realname: telephone, telephone, password });
+          const tempname = "保联汇"+ telephone.substring(telephone.length -4);
+          const result = await ctx.service.user.add({ realname: tempname, telephone, password });
 
           if (result.dataValues) {
             this.success({
