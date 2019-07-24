@@ -64,7 +64,7 @@ class customController extends BaseController {
             }
         } else {
             this.fail({
-                backMsg: "客户名已存在!"
+                backMsg: "客户已存在!"
             });
         }
     }
