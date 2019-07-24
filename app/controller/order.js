@@ -72,7 +72,7 @@ class orderController extends BaseController {
             }
         } else {
             this.fail({
-                backMsg: "订单编号已存在!"
+                backMsg: "保单号已存在!"
             });
         }
     }
