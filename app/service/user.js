@@ -235,13 +235,13 @@ class UserService extends Service {
             "`Orders`.`user_id`, " +
             "SUM( `Orders`.`insurance` ) AS `orderSum`, " +
             "COUNT( `Orders`.`user_id` ) AS `orderNum`, " +
-            "`Orders`.`created_at` " +
+            "`Orders`.`insured_time` " +
             "FROM " +
             "`order_info` AS `Orders` " +
             "GROUP BY " +
             "`Orders`.`user_id` " +
             ") `Orders` ON `User`.`id` = `Orders`.`user_id` " +
-            "AND `Orders`.`created_at` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
+            "AND `Orders`.`insured_time` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
             "AND '" + new Moment(range.endDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
             "LEFT OUTER JOIN `insurance_company_info` AS `InsuranceCompany` ON `User`.`company` = `InsuranceCompany`.`id` " +
             "LEFT OUTER JOIN (" +
@@ -317,13 +317,13 @@ class UserService extends Service {
                 "`Orders`.`user_id`, " +
                 "SUM( `Orders`.`insurance` ) AS `orderSum`, " +
                 "COUNT( `Orders`.`user_id` ) AS `orderNum`, " +
-                "`Orders`.`created_at` " +
+                "`Orders`.`insured_time` " +
                 "FROM " +
                 "`order_info` AS `Orders` " +
                 "GROUP BY " +
                 "`Orders`.`user_id` " +
                 ") `Orders` ON `User`.`id` = `Orders`.`user_id` " +
-                "AND `Orders`.`created_at` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
+                "AND `Orders`.`insured_time` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
                 "AND '" + new Moment(range.endDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
                 "LEFT OUTER JOIN `insurance_company_info` AS `InsuranceCompany` ON `User`.`company` = `InsuranceCompany`.`id` " +
                 "LEFT OUTER JOIN (" +
