@@ -239,7 +239,7 @@ class UserService extends Service {
             "FROM " +
             "`order_info` AS `Orders` " +
             "GROUP BY " +
-            "`Orders`.`user_id` " +
+            "`Orders`.`id` " +
             ") `Orders` ON `User`.`id` = `Orders`.`user_id` " +
             "AND `Orders`.`insured_time` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
             "AND '" + new Moment(range.endDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
@@ -257,7 +257,7 @@ class UserService extends Service {
             "GROUP BY " +
             "`id` " +
             "ORDER BY " +
-            "`Orders`." + order + " DESC, " +
+            "`Orders`.`" + order + "` DESC, " +
             "`User`.`created_at` DESC  ", {type: 'SELECT'});
 
         return res;
@@ -321,7 +321,7 @@ class UserService extends Service {
                 "FROM " +
                 "`order_info` AS `Orders` " +
                 "GROUP BY " +
-                "`Orders`.`user_id` " +
+                "`Orders`.`id` " +
                 ") `Orders` ON `User`.`id` = `Orders`.`user_id` " +
                 "AND `Orders`.`insured_time` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
                 "AND '" + new Moment(range.endDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
@@ -339,12 +339,11 @@ class UserService extends Service {
                 "GROUP BY " +
                 "`id` " +
                 "ORDER BY " +
-                "`Orders`." + order + " DESC, " +
+                "`Orders`.`" + order + "` DESC, " +
                 "`User`.`created_at` DESC  " +
                 "LIMIT " + (pageNumber - 1) * pageSize + ", " +
                 "" + pageSize + ";", {type: 'SELECT'})
         ]);
-        console.log('dataList[1] === ', dataList[1]);
 
         return {
             content: dataList[1],
