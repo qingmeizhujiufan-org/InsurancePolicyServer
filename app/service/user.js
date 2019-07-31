@@ -238,11 +238,12 @@ class UserService extends Service {
             "`Orders`.`insured_time` " +
             "FROM " +
             "`order_info` AS `Orders` " +
+            "WHERE " +
+            "`Orders`.`insured_time` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
+            "AND '" + new Moment(range.endDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
             "GROUP BY " +
             "`Orders`.`user_id` " +
             ") `Orders` ON `User`.`id` = `Orders`.`user_id` " +
-            "AND `Orders`.`insured_time` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
-            "AND '" + new Moment(range.endDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
             "LEFT OUTER JOIN `insurance_company_info` AS `InsuranceCompany` ON `User`.`company` = `InsuranceCompany`.`id` " +
             "LEFT OUTER JOIN (" +
             "SELECT " +
@@ -257,7 +258,7 @@ class UserService extends Service {
             "GROUP BY " +
             "`id` " +
             "ORDER BY " +
-            "`Orders`." + order + " DESC, " +
+            "`Orders`.`" + order + "` DESC, " +
             "`User`.`created_at` DESC  ", {type: 'SELECT'});
 
         return res;
@@ -320,11 +321,12 @@ class UserService extends Service {
                 "`Orders`.`insured_time` " +
                 "FROM " +
                 "`order_info` AS `Orders` " +
+                "WHERE " +
+                "`Orders`.`insured_time` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
+                "AND '" + new Moment(range.endDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
                 "GROUP BY " +
                 "`Orders`.`user_id` " +
                 ") `Orders` ON `User`.`id` = `Orders`.`user_id` " +
-                "AND `Orders`.`insured_time` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
-                "AND '" + new Moment(range.endDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
                 "LEFT OUTER JOIN `insurance_company_info` AS `InsuranceCompany` ON `User`.`company` = `InsuranceCompany`.`id` " +
                 "LEFT OUTER JOIN (" +
                 "SELECT " +
@@ -339,12 +341,11 @@ class UserService extends Service {
                 "GROUP BY " +
                 "`id` " +
                 "ORDER BY " +
-                "`Orders`." + order + " DESC, " +
+                "`Orders`.`" + order + "` DESC, " +
                 "`User`.`created_at` DESC  " +
                 "LIMIT " + (pageNumber - 1) * pageSize + ", " +
                 "" + pageSize + ";", {type: 'SELECT'})
         ]);
-        console.log('dataList[1] === ', dataList[1]);
 
         return {
             content: dataList[1],
