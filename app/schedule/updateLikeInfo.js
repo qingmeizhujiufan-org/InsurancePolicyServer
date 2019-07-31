@@ -16,7 +16,7 @@ class UpdateCache extends Subscription {
   // subscribe 是真正定时任务执行时被运行的函数
   async subscribe() {
     const { Thumbup } = this.ctx.model;
-    const res = await this.ctx.model.query("delete FROM `code_info`");
+    const res = await this.ctx.model.query("delete FROM `thumbup_info`");
   }
 }
 
