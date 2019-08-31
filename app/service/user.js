@@ -27,7 +27,7 @@ class UserService extends Service {
         const User = ctx.model.User;
         const {pageNumber = 1, pageSize = 10, keyWords = ''} = params;
         const whereCondition = {
-            '$and': {
+            '$or': {
                 telephone: {
                     '$like': '%' + keyWords + '%'
                 },
@@ -243,7 +243,7 @@ class UserService extends Service {
             "`Orders`.`insured_time` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
             "AND '" + new Moment(range.endDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
             "GROUP BY " +
-            "`Orders`.`id` " +
+            "`Orders`.`user_id` " +
             ") `Orders` ON `User`.`id` = `Orders`.`user_id` " +
             "LEFT OUTER JOIN `insurance_company_info` AS `InsuranceCompany` ON `User`.`company` = `InsuranceCompany`.`id` " +
             "LEFT OUTER JOIN (" +
@@ -326,7 +326,7 @@ class UserService extends Service {
                 "`Orders`.`insured_time` BETWEEN '" + new Moment(range.beginDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
                 "AND '" + new Moment(range.endDate).format('YYYY-MM-DD HH:mm:ss') + "' " +
                 "GROUP BY " +
-                "`Orders`.`id` " +
+                "`Orders`.`user_id` " +
                 ") `Orders` ON `User`.`id` = `Orders`.`user_id` " +
                 "LEFT OUTER JOIN `insurance_company_info` AS `InsuranceCompany` ON `User`.`company` = `InsuranceCompany`.`id` " +
                 "LEFT OUTER JOIN (" +
